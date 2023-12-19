@@ -44,11 +44,13 @@ def test_pin(pin_id):
 
 
 if __name__ == "__main__":
-    for _ in range(100):
-        test_pin(EFFECT_1_PIN)
-        time.sleep(0.1)
-    # test_pin(EFFECT_1_PIN)
-    # time.sleep(2.5)
-    # test_pin(EFFECT_2_PIN)
-    # time.sleep(2.5)
-    # test_pin(EFFECT_3_PIN)
+    # for _ in range(100):
+    #     test_pin(EFFECT_1_PIN)
+    #     time.sleep(0.1)
+    test_pin(PANEL_LED_PIN)
+    time.sleep(2.5)
+    test_pin(EFFECT_1_PIN)
+    time.sleep(2.5)
+    test_pin(EFFECT_2_PIN)
+    time.sleep(2.5)
+    test_pin(EFFECT_3_PIN)
