@@ -37,6 +37,17 @@ def control_leds(timestamps, audio_player, pins):
 
 
 
+def create_callable_dict(timestamps_dict, pins):
+    callable_dict = {}
+    for sound, times in timestamps_dict.items():
+        pin = pins[sound]
+        for start_time in times['start']:
+            callable_dict[start_time] = pin.turn_on
+        for stop_time in times['stop']:
+            callable_dict[stop_time] = pin.turn_off
+
+    return dict(sorted(callable_dict.items()))
+
 def load_audio_and_effects(sample_id):
     sample_dir = os.path.join(RESULTS_DIR, sample_id)
     if not os.path.exists(sample_dir):
@@ -63,16 +74,19 @@ def load_audio_and_effects(sample_id):
         sound: RpiPin(pin) for sound, pin in pin_mapping.items()
     }
 
-    audio_player = AudioPlayer(audio)
+    actions = create_callable_dict(timestamps, pins)
+    print(actions)
 
-    audio_thread = threading.Thread(target=audio_player.play)
-    led_thread = threading.Thread(target=control_leds, args=(timestamps, audio_player, pins))
-
-    audio_thread.start()
-    led_thread.start()
-
-    audio_thread.join()
-    led_thread.join()
+    # audio_player = AudioPlayer(audio)
+    #
+    # audio_thread = threading.Thread(target=audio_player.play)
+    # led_thread = threading.Thread(target=control_leds, args=(timestamps, audio_player, pins))
+    #
+    # audio_thread.start()
+    # led_thread.start()
+    #
+    # audio_thread.join()
+    # led_thread.join()
 
 
 if __name__ == '__main__':
