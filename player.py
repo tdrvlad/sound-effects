@@ -30,13 +30,6 @@ class AudioPlayer:
         return time.time() - self.start_time
 
 
-def control_leds(timestamps, audio_player, pins):
-    while True:
-        print(audio_player.current_playback_time())
-        time.sleep(0.5)  # Wait for audio to start playing
-
-
-
 def create_callable_dict(timestamps_dict, pins):
     callable_dict = {}
     for sound, times in timestamps_dict.items():
@@ -47,6 +40,26 @@ def create_callable_dict(timestamps_dict, pins):
             callable_dict[stop_time] = pin.turn_off
 
     return dict(sorted(callable_dict.items()))
+
+
+def control_leds(callable_dict, audio_player):
+    while audio_player.play_obj is None:
+        time.sleep(0.01)  # Wait for audio to start playing
+
+    while len(callable_dict) > 0:
+        current_time = audio_player.current_playback_time()
+        keys_to_remove = []
+
+        for timestamp in list(callable_dict.keys()):
+            if timestamp <= current_time:
+                callable_dict[timestamp]()
+                keys_to_remove.append(timestamp)
+
+        for key in keys_to_remove:
+            del callable_dict[key]
+
+        time.sleep(0.01)  # Check every 100ms to reduce CPU usage
+
 
 def load_audio_and_effects(sample_id):
     sample_dir = os.path.join(RESULTS_DIR, sample_id)
@@ -75,18 +88,17 @@ def load_audio_and_effects(sample_id):
     }
 
     actions = create_callable_dict(timestamps, pins)
-    print(actions)
 
-    # audio_player = AudioPlayer(audio)
-    #
-    # audio_thread = threading.Thread(target=audio_player.play)
-    # led_thread = threading.Thread(target=control_leds, args=(timestamps, audio_player, pins))
-    #
-    # audio_thread.start()
-    # led_thread.start()
-    #
-    # audio_thread.join()
-    # led_thread.join()
+    audio_player = AudioPlayer(audio)
+
+    audio_thread = threading.Thread(target=audio_player.play)
+    led_thread = threading.Thread(target=control_leds, args=(timestamps, audio_player, pins))
+
+    audio_thread.start()
+    led_thread.start()
+
+    audio_thread.join()
+    led_thread.join()
 
 
 if __name__ == '__main__':
