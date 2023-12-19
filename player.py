@@ -15,7 +15,7 @@ pin_mapping = {
 
 
 class AudioPlayer:
-    def __init__(self, audio, delay=-0.3):
+    def __init__(self, audio, delay=-0.4):
         self.audio = audio
         self.play_obj = None
         self.start_time = None
@@ -126,5 +126,5 @@ def test_sample(sample_id):
 
 
 if __name__ == '__main__':
-    load_audio_and_effects("20231219192311")
+    load_audio_and_effects("20231219195926")
     # test_sample('ding')
