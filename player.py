@@ -60,8 +60,9 @@ def control_leds(callable_dict, audio_player):
 
         curr_time = audio_player.current_playback_time()
         if curr_timestamp <= curr_time:
-            print(f"Action: {curr_time}")
+            print(f"\nAction: {curr_time}")
             curr_action()
+            print('\n')
             i += 1
         else:
             time.sleep(0.01)
@@ -126,5 +127,5 @@ def test_sample(sample_id):
 
 
 if __name__ == '__main__':
-    load_audio_and_effects("20231219195926")
+    load_audio_and_effects("20231219201323")
     # test_sample('ding')
