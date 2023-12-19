@@ -44,7 +44,7 @@ def create_callable_dict(timestamps_dict, pins):
 
 def control_leds(callable_dict, audio_player):
     while audio_player.current_playback_time() == 0:
-        time.sleep(0.01)  # Wait for audio to start playing
+        time.sleep(0.001)  # Wait for audio to start playing
 
     while len(callable_dict) > 0:
         current_time = audio_player.current_playback_time()
@@ -59,7 +59,7 @@ def control_leds(callable_dict, audio_player):
         for key in keys_to_remove:
             del callable_dict[key]
 
-        time.sleep(0.01)  # Check every 100ms to reduce CPU usage
+        time.sleep(0.001)  # Check every 100ms to reduce CPU usage
 
 
 def load_audio_and_effects(sample_id):
@@ -103,4 +103,4 @@ def load_audio_and_effects(sample_id):
 
 
 if __name__ == '__main__':
-    load_audio_and_effects("20231210203838")
+    load_audio_and_effects("20231219191413")

@@ -71,4 +71,4 @@ def mix_audio(recipe_name):
 
 
 if __name__ == '__main__':
-    audio, timestamps = mix_audio('demo_bells')
+    audio, timestamps = mix_audio('ding')
