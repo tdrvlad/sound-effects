@@ -115,6 +115,12 @@ def test_sample(sample_id):
     audio_thread = threading.Thread(target=audio_player.play)
     led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
 
+    audio_thread.start()
+    led_thread.start()
+
+    audio_thread.join()
+    led_thread.join()
+
 
 if __name__ == '__main__':
     # load_audio_and_effects("20231219192311")
