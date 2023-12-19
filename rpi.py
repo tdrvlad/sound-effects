@@ -19,13 +19,13 @@ class RpiPin:
 
         GPIO.setup(self.pin_id, GPIO.OUT, initial=self.off)
 
-    def on(self, time_interval=None):
+    def turn_on(self, time_interval=None):
         GPIO.output(self.pin_id, self.on)
         # if time_interval is not None:
         #     time.sleep(time_interval)
         #     GPIO.output(self.pin_id, self.off)
 
-    def off(self, time_interval=None):
+    def turn_off(self, time_interval=None):
         GPIO.output(self.pin_id, self.off)
         if time_interval is not None:
             time.sleep(time_interval)
@@ -36,7 +36,7 @@ def test_pin(pin_id):
     print(f"Testing GPIO pin {pin_id}.")
     pin = RpiPin(pin_id)
     print(pin)
-    pin.on()
+    pin.turn_on(3)
 
 
 if __name__ == "__main__":
