@@ -46,17 +46,18 @@ def control_leds(callable_dict, audio_player):
     while audio_player.current_playback_time() == 0:
         time.sleep(0.001)  # Wait for audio to start playing
 
-    while len(callable_dict) > 0:
-        current_time = audio_player.current_playback_time()
-        executed = []
+    i = 0
+    while i < len(callable_dict):
+        curr_timestamp = list(callable_dict.keys())[i]
+        curr_action = callable_dict[curr_timestamp]
 
-        for timestamp in list(callable_dict.keys()):
-            if timestamp <= current_time and timestamp not in executed:
-                print(f"Action: {current_time}")
-                callable_dict[timestamp]()
-                executed.append(timestamp)
-
-        time.sleep(0.001)  # Check every 100ms to reduce CPU usage
+        curr_time = audio_player.current_playback_time()
+        if curr_timestamp <= curr_time:
+            print(f"Action: {curr_time}")
+            curr_action()
+            i += 1
+        else:
+            time.sleep(0.01)
 
 
 def load_audio_and_effects(sample_id):
