@@ -1,10 +1,11 @@
 from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, RESULTS_DIR, RECIPES_DIR
 import os
-import yaml
 from pydub import AudioSegment
 from datetime import datetime
 from collections import defaultdict
 import random
+
+from utils import load_yaml, write_yaml
 
 RECIPE_LENGTH = 'length'
 RECIPE_SAMPLES = 'samples'
@@ -14,16 +15,6 @@ RECIPE_SAMPLE_FREQUENCY_MIN = 'min'
 RECIPE_SAMPLE_FREQUENCY_MAX = 'max'
 TIMESTAMPS_START = 'start'
 TIMESTAMPS_END = 'stop'
-
-
-def load_yaml(file_path):
-    with open(file_path, 'r') as file:
-        return yaml.safe_load(file)
-
-
-def write_yaml(file_path, content):
-    with open(file_path, 'w') as file:
-        yaml.dump(content, file)
 
 
 def mix_audio(recipe_name):
