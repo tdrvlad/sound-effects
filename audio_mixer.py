@@ -42,8 +42,11 @@ def mix_audio(recipe_name):
             start = random.uniform(last_timestamp + frequency_min, last_timestamp + frequency_max)
             mixed_audio = mixed_audio.overlay(audio, position=start * 1000)
             last_timestamp = start
-            timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_START].extend([start + ts for ts in sample_timestamps_start])
-            timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_END].extend([start + ts for ts in sample_timestamps_end])
+            timestamps_start = [start + ts for ts in sample_timestamps_start if start + ts < recipe[RECIPE_LENGTH]]
+            timestamps_end = [start + ts for ts in sample_timestamps_end if start + ts < recipe[RECIPE_LENGTH]]
+
+            timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_START].extend(timestamps_start)
+            timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_END].extend(timestamps_end)
 
         timestamps[sample[RECIPE_SAMPLE_NAME]] = dict(timestamps[sample[RECIPE_SAMPLE_NAME]])
         samples_names.add(RECIPE_SAMPLE_NAME)
