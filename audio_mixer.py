@@ -41,7 +41,7 @@ def mix_audio(recipe_name):
         while last_timestamp < recipe[RECIPE_LENGTH]:
             start = random.uniform(last_timestamp + frequency_min, last_timestamp + frequency_max)
             mixed_audio = mixed_audio.overlay(audio, position=start * 1000)
-            last_timestamp += start
+            last_timestamp = start
             timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_START].extend([start + ts for ts in sample_timestamps_start])
             timestamps[sample[RECIPE_SAMPLE_NAME]][TIMESTAMPS_END].extend([start + ts for ts in sample_timestamps_end])
 
