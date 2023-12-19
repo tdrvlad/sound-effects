@@ -42,4 +42,4 @@ def test_pin(pin_id):
 
 
 if __name__ == "__main__":
-    test_pin(PANEL_LED_PIN)
+    test_pin(EFFECT_1_PIN)

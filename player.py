@@ -57,7 +57,7 @@ def control_leds(callable_dict, audio_player):
             curr_action()
             i += 1
         else:
-            time.sleep(0.05)
+            time.sleep(0.01)
 
 
 def load_audio_and_effects(sample_id):
@@ -101,4 +101,4 @@ def load_audio_and_effects(sample_id):
 
 
 if __name__ == '__main__':
-    load_audio_and_effects("20231219191413")
+    load_audio_and_effects("20231219192311")
