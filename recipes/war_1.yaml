@@ -1,10 +1,10 @@
-length: 10
+length: 25
 samples:
-  - name: "ding"
+  - name: "mannlicher_rifle"
     frequency_range:
       min: 1
-      max: 4
-  - name: "doorbell"
+      max: 2
+  - name: "maxim_machine_gun"
     frequency_range:
-      min: 3
-      max: 5
+      min: 0
+      max: 2
