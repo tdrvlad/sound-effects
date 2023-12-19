@@ -15,10 +15,11 @@ pin_mapping = {
 
 
 class AudioPlayer:
-    def __init__(self, audio):
+    def __init__(self, audio, delay=-0.2):
         self.audio = audio
         self.play_obj = None
         self.start_time = None
+        self.delay = delay
 
     def play(self):
         self.start_time = time.time()
@@ -27,7 +28,8 @@ class AudioPlayer:
     def current_playback_time(self):
         if self.start_time is None:
             return 0
-        return time.time() - self.start_time
+        current_playback_time = time.time() - self.start_time + self.delay
+        return current_playback_time
 
 
 def create_sound_callable_dict(sound_timestamps_dict, pin: RpiPin):
