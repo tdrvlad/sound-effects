@@ -1,7 +1,7 @@
 import os
 import time
-from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN
-from utils import load_yaml
+from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END
+from utils import load_yaml, load_sample
 from pydub.playback import play
 import threading
 from pydub import AudioSegment
@@ -30,15 +30,20 @@ class AudioPlayer:
         return time.time() - self.start_time
 
 
-def create_callable_dict(timestamps_dict, pins):
+def create_sound_callable_dict(sound_timestamps_dict, pin: RpiPin):
     callable_dict = {}
-    for sound, times in timestamps_dict.items():
-        pin = pins[sound]
-        for start_time in times['start']:
-            callable_dict[start_time] = pin.turn_on
-        for stop_time in times['stop']:
-            callable_dict[stop_time] = pin.turn_off
+    for start_time in sound_timestamps_dict[TIMESTAMPS_START]:
+        callable_dict[start_time] = pin.turn_on
+    for stop_time in sound_timestamps_dict[TIMESTAMPS_END]:
+        callable_dict[stop_time] = pin.turn_off
+    return dict(sorted(callable_dict.items()))
 
+
+def create_sounds_callable_dict(sounds_timestamps_dict, pins):
+    callable_dict = {}
+    for sound, sound_timestamps_dict in sounds_timestamps_dict.items():
+        pin = pins[sound]
+        callable_dict.extend(create_sound_callable_dict(sound_timestamps_dict, pin))
     return dict(sorted(callable_dict.items()))
 
 
@@ -100,5 +105,17 @@ def load_audio_and_effects(sample_id):
     led_thread.join()
 
 
+def test_sample(sample_id):
+    audio, sample_timestamps = load_sample(sample_id)
+
+    pin = RpiPin(EFFECT_1_PIN)
+    actions = create_sound_callable_dict(sample_timestamps, pin)
+
+    audio_player = AudioPlayer(audio)
+    audio_thread = threading.Thread(target=audio_player.play)
+    led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
+
+
 if __name__ == '__main__':
-    load_audio_and_effects("20231219192311")
+    # load_audio_and_effects("20231219192311")
+    test_sample('ding')

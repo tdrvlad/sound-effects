@@ -1,20 +1,12 @@
-from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, RESULTS_DIR, RECIPES_DIR
+from paths import RESULTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
+    RECIPE_SAMPLE_FREQUENCY_MIN, RECIPE_SAMPLE_FREQUENCY_MAX, TIMESTAMPS_START, TIMESTAMPS_END
 import os
 from pydub import AudioSegment
 from datetime import datetime
 from collections import defaultdict
 import random
 
-from utils import load_yaml, write_yaml
-
-RECIPE_LENGTH = 'length'
-RECIPE_SAMPLES = 'samples'
-RECIPE_SAMPLE_NAME = 'name'
-RECIPE_SAMPLE_FREQUENCY = 'frequency_range'
-RECIPE_SAMPLE_FREQUENCY_MIN = 'min'
-RECIPE_SAMPLE_FREQUENCY_MAX = 'max'
-TIMESTAMPS_START = 'start'
-TIMESTAMPS_END = 'stop'
+from utils import load_yaml, write_yaml, load_sample
 
 
 def mix_audio(recipe_name):
@@ -34,16 +26,8 @@ def mix_audio(recipe_name):
     samples_names = set([])
 
     for sample in recipe[RECIPE_SAMPLES]:
-        audio_file = os.path.join(AUDIO_SAMPLES_DIR, f'{sample[RECIPE_SAMPLE_NAME]}.mp3')
-        timestamps_file = os.path.join(AUDIO_SAMPLES_TIMESTAMPS_DIR, f'{sample[RECIPE_SAMPLE_NAME]}.yaml')
-
-        if not os.path.exists(audio_file):
-            raise ValueError(f"Audio {sample[RECIPE_SAMPLE_NAME]}.mp3 does not exist in {AUDIO_SAMPLES_DIR}.")
-        if not os.path.exists(timestamps_file):
-            raise ValueError(f"Audio Timestamps {sample[RECIPE_SAMPLE_NAME]}.yaml does not exist in {AUDIO_SAMPLES_TIMESTAMPS_DIR}.")
-
-        audio = AudioSegment.from_mp3(audio_file)
-        sample_timestamps = load_yaml(timestamps_file)
+        sample_id = sample[RECIPE_SAMPLE_NAME]
+        audio, sample_timestamps = load_sample(sample_id)
 
         sample_timestamps_start = sample_timestamps[TIMESTAMPS_START]
         sample_timestamps_end = sample_timestamps[TIMESTAMPS_END]
