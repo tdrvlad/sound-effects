@@ -39,7 +39,7 @@ def test_pin(pin_id):
     print(f"Testing GPIO pin {pin_id}.")
     pin = RpiPin(pin_id)
     pin.turn_on()
-    time.sleep(0.1)
+    time.sleep(0.5)
     pin.turn_off()
 
 
