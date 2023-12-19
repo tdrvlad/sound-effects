@@ -43,7 +43,7 @@ def create_callable_dict(timestamps_dict, pins):
 
 
 def control_leds(callable_dict, audio_player):
-    while audio_player.play_obj is None:
+    while audio_player.current_playback_time() == 0:
         time.sleep(0.01)  # Wait for audio to start playing
         print('!')
 
