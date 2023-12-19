@@ -21,9 +21,9 @@ class RpiPin:
 
     def turn_on(self, time_interval=None):
         GPIO.output(self.pin_id, self.on)
-        # if time_interval is not None:
-        #     time.sleep(time_interval)
-        #     GPIO.output(self.pin_id, self.off)
+        if time_interval is not None:
+            time.sleep(time_interval)
+            GPIO.output(self.pin_id, self.off)
 
     def turn_off(self, time_interval=None):
         GPIO.output(self.pin_id, self.off)
