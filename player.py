@@ -32,7 +32,7 @@ class AudioPlayer:
 
 def control_leds(timestamps, audio_player, pins):
     while True:
-        print(audio_player.current_playback_time)
+        print(audio_player.current_playback_time())
         time.sleep(0.5)  # Wait for audio to start playing
 
 
