@@ -70,6 +70,7 @@ def main(sample_id):
     except Exception as e:
         led_pin.turn_off()
         raise e
+    led_pin.turn_off()
 
 
 def load_audio_and_effects(sample_id):
