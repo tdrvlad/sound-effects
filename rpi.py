@@ -44,9 +44,9 @@ def test_pin(pin_id):
 
 if __name__ == "__main__":
     test_pin(PANEL_LED_PIN)
-    time.sleep(1.5)
+    time.sleep(2.5)
     test_pin(EFFECT_1_PIN)
-    time.sleep(1.5)
+    time.sleep(2.5)
     test_pin(EFFECT_2_PIN)
-    time.sleep(1.5)
+    time.sleep(2.5)
     test_pin(EFFECT_3_PIN)
