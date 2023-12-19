@@ -1,17 +1,11 @@
 import os
 import time
-from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END
+from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN
 from utils import load_yaml, load_sample
 from pydub.playback import play
 import threading
 from pydub import AudioSegment
 from rpi import RpiPin
-
-
-pin_mapping = {
-    'ding': EFFECT_1_PIN,
-    'doorbell': EFFECT_2_PIN
-}
 
 
 class AudioPlayer:
@@ -68,7 +62,18 @@ def control_leds(callable_dict, audio_player):
             time.sleep(0.01)
 
 
+def main(sample_id):
+    led_pin = RpiPin(PANEL_LED_PIN)
+    led_pin.turn_on()
+    try:
+        load_audio_and_effects(sample_id)
+    except Exception as e:
+        led_pin.turn_off()
+        raise e
+
+
 def load_audio_and_effects(sample_id):
+
     sample_dir = os.path.join(RESULTS_DIR, sample_id)
     if not os.path.exists(sample_dir):
         raise ValueError(f"Sample {sample_id} not found.")
@@ -127,6 +132,6 @@ def test_sample(sample_id):
 
 
 if __name__ == '__main__':
-    load_audio_and_effects("battle1_20231219230852")
+    main("battle1_20231219231714")
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
