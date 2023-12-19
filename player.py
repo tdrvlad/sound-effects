@@ -31,23 +31,10 @@ class AudioPlayer:
 
 
 def control_leds(timestamps, audio_player, pins):
-    while audio_player.play_obj is None or not audio_player.play_obj.is_playing():
-        time.sleep(0.1)  # Wait for audio to start playing
-
-    while audio_player.play_obj.is_playing():
+    while True:
         print(audio_player.current_playback_time)
-        current_time = audio_player.current_playback_time()
-        for sound, times in timestamps.items():
-            if sound not in pins:
-                raise ValueError(f"Sound {sound} has no pin associated.")
-            pin = pins[sound]
-            for start, stop in zip(times['start'], times['stop']):
-                if start <= current_time < stop:
-                    print(f"Turn on {sound}")
-                    pin.turn_on()
-                elif current_time >= stop:
-                    pin.turn_off()
-        time.sleep(0.1)  # Check every 100ms
+        time.sleep(0.5)  # Wait for audio to start playing
+
 
 
 def load_audio_and_effects(sample_id):
