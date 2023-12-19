@@ -1,0 +1,10 @@
+length: 10
+samples:
+  - name: "ding"
+    frequency_range:
+      min: 1
+      max: 4
+  - name: "doorbell"
+    frequency_range:
+      min: 3
+      max: 5
