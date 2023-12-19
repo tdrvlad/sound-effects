@@ -57,7 +57,7 @@ def control_leds(callable_dict, audio_player):
             curr_action()
             i += 1
         else:
-            time.sleep(0.01)
+            time.sleep(0.05)
 
 
 def load_audio_and_effects(sample_id):
