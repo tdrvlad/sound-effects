@@ -36,7 +36,7 @@ class RpiPin:
 def test_pin(pin_id):
     print(f"Testing GPIO pin {pin_id}.")
     pin = RpiPin(pin_id)
-    pin.on(time_interval=3)
+    pin.on()
 
 
 if __name__ == "__main__":
