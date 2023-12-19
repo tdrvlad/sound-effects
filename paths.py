@@ -3,7 +3,7 @@ AUDIO_SAMPLES_TIMESTAMPS_DIR = 'audio_samples_timestamps'
 RECIPES_DIR = 'recipes'
 RESULTS_DIR = 'generated_audios'
 
-AUDIO_FILE = 'audio'
+AUDIO_FILE = 'output'
 TIMESTAMPS_FILE = 'timestamps'
 
 PANEL_LED_PIN = 27
