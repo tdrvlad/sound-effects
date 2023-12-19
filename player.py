@@ -35,6 +35,7 @@ def control_leds(timestamps, audio_player, pins):
         time.sleep(0.1)  # Wait for audio to start playing
 
     while audio_player.play_obj.is_playing():
+        print(audio_player.current_playback_time)
         current_time = audio_player.current_playback_time()
         for sound, times in timestamps.items():
             if sound not in pins:
