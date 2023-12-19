@@ -14,7 +14,7 @@ def mix_audio(recipe_name):
     if not os.path.exists(recipe_file):
         raise ValueError(f"Recipe {recipe_name} does not exist in {RECIPES_DIR}.")
 
-    output_dir = os.path.join(RESULTS_DIR, datetime.now().strftime('%Y%m%d%H%M%S'))
+    output_dir = os.path.join(RESULTS_DIR, f'{recipe_name}_{datetime.now().strftime("%Y%m%d%H%M%S")}')
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
@@ -55,4 +55,4 @@ def mix_audio(recipe_name):
 
 
 if __name__ == '__main__':
-    audio, timestamps = mix_audio('war_1')
+    audio, timestamps = mix_audio('battle1')
