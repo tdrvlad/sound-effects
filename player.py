@@ -2,7 +2,7 @@ import os
 import time
 from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN
 from utils import load_yaml
-from pydub.playback import _play_with_simpleaudio
+from pydub.playback import play
 import threading
 from pydub import AudioSegment
 from rpi import RpiPin
@@ -22,7 +22,7 @@ class AudioPlayer:
 
     def play(self):
         self.start_time = time.time()
-        self.play_obj = _play_with_simpleaudio(self.audio)
+        self.play_obj = play(self.audio)
         self.play_obj.wait_done()
 
     def current_playback_time(self):
