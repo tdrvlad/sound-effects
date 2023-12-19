@@ -47,11 +47,13 @@ def control_leds(callable_dict, audio_player):
         time.sleep(0.01)  # Wait for audio to start playing
 
     while len(callable_dict) > 0:
+        print('.')
         current_time = audio_player.current_playback_time()
         keys_to_remove = []
 
         for timestamp in list(callable_dict.keys()):
             if timestamp <= current_time:
+                print("Action.")
                 callable_dict[timestamp]()
                 keys_to_remove.append(timestamp)
 
