@@ -93,7 +93,7 @@ def load_audio_and_effects(sample_id):
         sound: RpiPin(pin) for sound, pin in pin_mapping.items()
     }
 
-    actions = create_callable_dict(timestamps, pins)
+    actions = create_sounds_callable_dict(timestamps, pins)
 
     audio_player = AudioPlayer(audio)
 
@@ -126,5 +126,5 @@ def test_sample(sample_id):
 
 
 if __name__ == '__main__':
-    # load_audio_and_effects("20231219192311")
-    test_sample('ding')
+    load_audio_and_effects("20231219192311")
+    # test_sample('ding')
