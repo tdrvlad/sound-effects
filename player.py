@@ -48,16 +48,13 @@ def control_leds(callable_dict, audio_player):
 
     while len(callable_dict) > 0:
         current_time = audio_player.current_playback_time()
-        keys_to_remove = []
+        executed = []
 
         for timestamp in list(callable_dict.keys()):
-            if timestamp <= current_time:
-                print("Action.")
+            if timestamp <= current_time and timestamp not in executed:
+                print(f"Action: {current_time}")
                 callable_dict[timestamp]()
-                keys_to_remove.append(timestamp)
-
-        for key in keys_to_remove:
-            del callable_dict[key]
+                executed.append(timestamp)
 
         time.sleep(0.001)  # Check every 100ms to reduce CPU usage
 
