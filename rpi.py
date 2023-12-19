@@ -18,6 +18,7 @@ class RpiPin:
             self.off = GPIO.HIGH
 
         GPIO.setup(self.pin_id, GPIO.OUT, initial=self.off)
+        self.turn_off()
 
     def turn_on(self, time_interval=None):
         print(f"Turn on {self.pin_id}.")
