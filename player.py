@@ -110,6 +110,7 @@ def test_sample(sample_id):
 
     pin = RpiPin(EFFECT_1_PIN)
     actions = create_sound_callable_dict(sample_timestamps, pin)
+    print(actions)
 
     audio_player = AudioPlayer(audio)
     audio_thread = threading.Thread(target=audio_player.play)
