@@ -23,7 +23,6 @@ class AudioPlayer:
     def play(self):
         self.start_time = time.time()
         self.play_obj = play(self.audio)
-        self.play_obj.wait_done()
 
     def current_playback_time(self):
         if self.start_time is None:
@@ -43,6 +42,7 @@ def control_leds(timestamps, audio_player, pins):
             pin = pins[sound]
             for start, stop in zip(times['start'], times['stop']):
                 if start <= current_time < stop:
+                    print(f"Turn on {sound}")
                     pin.turn_on()
                 elif current_time >= stop:
                     pin.turn_off()
