@@ -45,7 +45,7 @@ def create_sounds_callable_dict(sounds_timestamps_dict, pins):
     callable_dict = {}
     for sound, sound_timestamps_dict in sounds_timestamps_dict.items():
         pin = pins[sound]
-        callable_dict.extend(create_sound_callable_dict(sound_timestamps_dict, pin))
+        callable_dict.update(create_sound_callable_dict(sound_timestamps_dict, pin))
     return dict(sorted(callable_dict.items()))
 
 
