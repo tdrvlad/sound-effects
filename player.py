@@ -127,5 +127,5 @@ def test_sample(sample_id):
 
 
 if __name__ == '__main__':
-    # load_audio_and_effects("battle1_20231219225402")
-    test_sample('maxim_machine_gun')
+    load_audio_and_effects("battle1_20231219230207")
+    # test_sample('maxim_machine_gun')
