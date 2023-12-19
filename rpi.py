@@ -38,12 +38,15 @@ def test_pin(pin_id):
     print(f"Testing GPIO pin {pin_id}.")
     pin = RpiPin(pin_id)
     pin.turn_on()
+    time.sleep(0.2)
     pin.turn_off()
 
 
 if __name__ == "__main__":
+    test_pin(PANEL_LED_PIN)
+    time.sleep(1.5)
     test_pin(EFFECT_1_PIN)
-    time.sleep(0.5)
+    time.sleep(1.5)
     test_pin(EFFECT_2_PIN)
-    time.sleep(0.5)
+    time.sleep(1.5)
     test_pin(EFFECT_3_PIN)
