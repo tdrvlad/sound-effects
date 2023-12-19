@@ -15,7 +15,7 @@ pin_mapping = {
 
 
 class AudioPlayer:
-    def __init__(self, audio, delay=-0.2):
+    def __init__(self, audio, delay=-0.3):
         self.audio = audio
         self.play_obj = None
         self.start_time = None
