@@ -42,4 +42,4 @@ def test_pin(pin_id):
 
 
 if __name__ == "__main__":
-    test_pin(EFFECT_2_PIN)
+    test_pin(EFFECT_3_PIN)
