@@ -6,6 +6,7 @@ from pydub.playback import play
 import threading
 from pydub import AudioSegment
 from rpi import RpiPin
+import RPi.GPIO as GPIO
 
 
 class AudioPlayer:
@@ -72,7 +73,9 @@ def main(sample_id):
     except Exception as e:
         led_pin.turn_off()
         raise e
-    led_pin.turn_off()
+    finally:
+        led_pin.turn_off()
+        GPIO.cleanup()
 
 
 def load_audio_and_effects(sample_id):
