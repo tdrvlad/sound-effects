@@ -136,4 +136,4 @@ def test_sample(sample_id):
 if __name__ == '__main__':
     main("battle1_20231219231714")
     # test_sample('maxim_machine_gun')
-    # test_sample('explosion')
+    test_sample('explosion')
