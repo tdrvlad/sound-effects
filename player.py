@@ -66,7 +66,7 @@ def control_leds(callable_dict, audio_player):
 def main(sample_id):
     led_pin = RpiPin(PANEL_LED_PIN)
     led_pin.turn_on()
-    time.sleep(2)
+    time.sleep(0.5)
     try:
         # load_audio_and_effects(sample_id)
         test_sample('explosion')
