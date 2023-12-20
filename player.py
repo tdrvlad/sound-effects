@@ -67,7 +67,8 @@ def main(sample_id):
     led_pin.turn_on()
     time.sleep(2)
     try:
-        load_audio_and_effects(sample_id)
+        # load_audio_and_effects(sample_id)
+        test_sample('explosion')
     except Exception as e:
         led_pin.turn_off()
         raise e
@@ -136,4 +137,4 @@ def test_sample(sample_id):
 if __name__ == '__main__':
     # main("battle1_20231219231714")
     # test_sample('maxim_machine_gun')
-    test_sample('explosion')
+    # test_sample('explosion')
