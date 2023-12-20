@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Started Execution
-sleep 1
+sleep 10
 echo Running Script
 
 export HOME=/home/pi
