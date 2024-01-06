@@ -136,6 +136,6 @@ def test_sample(sample_id):
 
 if __name__ == '__main__':
     # main("battle1_20231219231714")
-    main("ww1_charge_1.mp3_ww1_charge_2.mp3_battle1_20231219231714")
+    main("battle_final")
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')

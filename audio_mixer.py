@@ -84,4 +84,4 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 
 if __name__ == '__main__':
     # audio, timestamps = mix_audio('battle1')
-    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", "ww1_charge_2.mp3_battle1_20231219231714", position="before")
+    add_audio_to_effect("./audio_samples/outro_battle.mp3", "final", position="after")
