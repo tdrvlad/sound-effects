@@ -94,6 +94,6 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 if __name__ == '__main__':
     effect_id = mix_audio('battle_long')
     add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-3)
-    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
-    add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
+    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id, gain=-1)
+    add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id, gain=-1)
     add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after", result_id=effect_id)
