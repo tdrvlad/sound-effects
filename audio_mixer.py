@@ -59,7 +59,7 @@ def mix_audio(recipe_name):
     return recipe_id
 
 
-def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before", result_id=None):
+def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before", result_id=None, gain=0):
     if result_id is None:
         result_id = f'{os.path.basename(audio_path).split(".")[0]}_{effect_id}'
 
@@ -71,6 +71,9 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 
     effect_audio, effect_timestamps = load_effect(effect_id)
     audio = load_audio(audio_path)
+
+    if gain:
+        audio = audio.apply_gain(gain)
 
     if position == "before":
         result_audio = audio + effect_audio
@@ -90,7 +93,7 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 
 if __name__ == '__main__':
     effect_id = mix_audio('battle_long')
-    add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id)
+    add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-3)
     add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
     add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
     add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after", result_id=effect_id)

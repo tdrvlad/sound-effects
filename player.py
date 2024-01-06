@@ -138,4 +138,4 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle1_20231219231714")
-    main("battle_long_20240106145648")
+    main("battle_long_20240106150139")
