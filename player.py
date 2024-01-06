@@ -68,8 +68,7 @@ def main(sample_id):
 
     def action():
         led_pin.turn_off()
-        # load_audio_and_effects(sample_id)
-        time.sleep(3)
+        load_audio_and_effects(sample_id)
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN, action=action)
