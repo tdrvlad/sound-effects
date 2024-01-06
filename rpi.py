@@ -1,8 +1,19 @@
 import time
-from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN
+from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, BUTTON_PULL_DOWN
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
+
+
+class RpiInput:
+    def __init__(self, pin_id, pull_down=BUTTON_PULL_DOWN, action=None):
+        self.pin_id = pin_id
+        if pull_down:
+            pull = GPIO.PUD_DOWN
+        else:
+            pull = GPIO.PUD_UP
+        GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
+        GPIO.add_event_detect(self.pin_id, GPIO.FALLING, callback=action, bouncetime=200)
 
 
 class RpiPin:

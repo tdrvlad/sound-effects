@@ -1,11 +1,11 @@
 import os
 import time
-from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN
+from paths import RESULTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN
 from utils import load_yaml, load_sample
 from pydub.playback import play
 import threading
 from pydub import AudioSegment
-from rpi import RpiPin
+from rpi import RpiPin, RpiInput
 import RPi.GPIO as GPIO
 
 
@@ -65,16 +65,22 @@ def control_leds(callable_dict, audio_player):
 
 def main(sample_id):
     led_pin = RpiPin(PANEL_LED_PIN)
-    led_pin.turn_on()
-    time.sleep(0.5)
-    try:
+
+    def action():
         load_audio_and_effects(sample_id)
+    button = RpiInput(BUTTON_PIN, action=action)
+
+    try:
+        while True:
+            time.sleep(0.1)
+
     except Exception as e:
-        led_pin.turn_off()
         raise e
+
     finally:
         led_pin.turn_off()
         GPIO.cleanup()
+
 
 
 def load_audio_and_effects(sample_id):
