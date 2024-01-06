@@ -59,10 +59,11 @@ def mix_audio(recipe_name):
     return recipe_id
 
 
-def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before"):
+def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before", result_id=None):
+    if result_id is None:
+        result_id = f'{os.path.basename(audio_path).split(".")[0]}_{effect_id}'
 
-    recipe_id = f'{os.path.basename(audio_path).split(".")[0]}_{effect_id}'
-    output_dir = os.path.join(EFFECTS_DIR, recipe_id)
+    output_dir = os.path.join(EFFECTS_DIR, result_id)
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
@@ -84,11 +85,12 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
     result_audio.export(output_audio_file, format='mp3')
     write_yaml(output_timestamps_file, effect_timestamps)
 
-    return recipe_id
+    return result_id
 
 
 if __name__ == '__main__':
     effect_id = mix_audio('battle_long')
-    effect_id = add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay")
-    effect_id = add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before")
-    effect_id = add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after")
+    add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id)
+    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
+    add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
+    add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after", result_id=effect_id)
