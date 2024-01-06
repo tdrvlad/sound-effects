@@ -6,15 +6,26 @@ GPIO.setmode(GPIO.BCM)
 
 
 class RpiInput:
-    def __init__(self, pin_id, pull_down=BUTTON_PULL_DOWN, action=None):
+    def __init__(self, pin_id, pull_down=BUTTON_PULL_DOWN, action=None, press_time=0.5):
         self.pin_id = pin_id
+        self.action = action
+        self.pull_down = pull_down
+        self.press_time = press_time
         if pull_down:
             pull = GPIO.PUD_DOWN
+            self.pressed_state = GPIO.HIGH
         else:
             pull = GPIO.PUD_UP
-        GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
-        GPIO.add_event_detect(self.pin_id, GPIO.RISING, callback=action, bouncetime=300)
+            self.pressed_state = GPIO.LOW
 
+        GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
+
+    def check_pressed(self):
+        start_time = time.time()
+        while GPIO.input(self.pin_id) == self.pressed_state:
+            time.sleep(0.01)
+            if time.time() - start_time > self.press_time:
+                self.action()
 
 class RpiPin:
     def __init__(self, pin_id, reverse=True):

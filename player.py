@@ -73,13 +73,13 @@ def main(sample_id):
         time.sleep(3)
         led_pin.turn_on()
 
-
     button = RpiInput(BUTTON_PIN, action=action)
 
     try:
         led_pin.turn_on()
         while True:
             time.sleep(0.1)
+            button.check_pressed()
 
     except Exception as e:
         raise e
