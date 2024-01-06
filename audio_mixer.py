@@ -5,8 +5,9 @@ from pydub import AudioSegment
 from datetime import datetime
 from collections import defaultdict
 import random
+from typing import Literal
 
-from utils import load_yaml, write_yaml, load_sample, load_audio
+from utils import load_yaml, write_yaml, load_sample, load_audio, load_effect, add_delay_to_timestamps
 
 
 def mix_audio(recipe_name):
@@ -57,15 +58,30 @@ def mix_audio(recipe_name):
     return mixed_audio, timestamps
 
 
-def add_audio_to_effect(audio_path, effect_id, before=True):
-    output_dir = os.path.join(EFFECTS_DIR, f'{audio_path}_{effect_id}')
+def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before"):
+    output_dir = os.path.join(EFFECTS_DIR, f'{os.path.basename(audio_path)}_{effect_id}')
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
     output_timestamps_file = os.path.join(output_dir, 'timestamps.yaml')
 
-    audio, timestamps = load_sample(effect_id)
+    effect_audio, effect_timestamps = load_effect(effect_id)
+    audio = load_audio(audio_path)
+
+    if position == "before":
+        result_audio = audio + effect_audio
+        add_delay_to_timestamps(effect_timestamps, delta=len(audio) / 1000.0)
+    elif position == "after":
+        result_audio = effect_audio + audio
+    elif position == "overlay":
+        result_audio = effect_audio.overlay(audio, position=0)
+    else:
+        raise ValueError("Specify position for adding audio.")
+
+    result_audio.export(output_audio_file, format='mp3')
+    write_yaml(output_timestamps_file, effect_timestamps)
 
 
 if __name__ == '__main__':
-    audio, timestamps = mix_audio('battle1')
+    # audio, timestamps = mix_audio('battle1')
+    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", "ww1_charge_2.mp3_battle1_20231219231714", position="before")
