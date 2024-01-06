@@ -8,8 +8,8 @@ samples:
     frequency_range:
       min: 0.5
       max: 4
-  - name: "mannlicher_rifle"
-    frequency_range:
-      min: 0.5
-      max: 3
+#  - name: "mannlicher_rifle"
+#    frequency_range:
+#      min: 0.5
+#      max: 3
 
