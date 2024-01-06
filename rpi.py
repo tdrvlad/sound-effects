@@ -13,7 +13,7 @@ class RpiInput:
         else:
             pull = GPIO.PUD_UP
         GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
-        GPIO.add_event_detect(self.pin_id, GPIO.FALLING, callback=action, bouncetime=200)
+        GPIO.add_event_detect(self.pin_id, GPIO.RISING, callback=action, bouncetime=300)
 
 
 class RpiPin:
