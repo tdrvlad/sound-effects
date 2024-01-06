@@ -1,12 +1,17 @@
 import yaml
 import os
-from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR
+from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE
 from pydub import AudioSegment
 
 
 def load_yaml(file_path):
     with open(file_path, 'r') as file:
         return yaml.safe_load(file)
+
+
+def load_audio(audio_path):
+    audio = AudioSegment.from_mp3(audio_path)
+    return audio
 
 
 def write_yaml(file_path, content):
@@ -24,6 +29,31 @@ def load_sample(sample_id):
         raise ValueError(
             f"Audio Timestamps {sample_id}.yaml does not exist in {AUDIO_SAMPLES_TIMESTAMPS_DIR}.")
 
-    audio = AudioSegment.from_mp3(audio_file)
+    audio = load_audio(audio_file)
     sample_timestamps = load_yaml(timestamps_file)
     return audio, sample_timestamps
+
+
+def load_effect(effect_id):
+    effect_dir = os.path.join(EFFECTS_DIR, effect_id)
+    if not os.path.exists(effect_dir):
+        raise ValueError(f"Effect {effect_id} not found.")
+    audio_file = os.path.join(effect_dir, f'{AUDIO_FILE}.mp3')
+    if not os.path.exists(audio_file):
+        raise ValueError(f"Audios {audio_file} not found.")
+    timestamps_file = os.path.join(effect_dir, f'{TIMESTAMPS_FILE}.yaml')
+    if not os.path.exists(timestamps_file):
+        raise ValueError(f"Timestamps {timestamps_file} not found.")
+
+    audio = AudioSegment.from_mp3(audio_file)
+    timestamps = load_yaml(timestamps_file)
+
+    return audio, timestamps
+
+
+def add_delay_to_timestamps(timestamps_dict, delta):
+    for key, time_data in timestamps_dict.items():
+        for time_type in ["start", "stop"]:
+            time_data[time_type] = [timestamp + delta for timestamp in time_data[time_type]]
+
+

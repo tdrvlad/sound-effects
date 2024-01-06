@@ -1,4 +1,4 @@
-from paths import RESULTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
+from paths import EFFECTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
     RECIPE_SAMPLE_FREQUENCY_MIN, RECIPE_SAMPLE_FREQUENCY_MAX, TIMESTAMPS_START, TIMESTAMPS_END
 import os
 from pydub import AudioSegment
@@ -6,7 +6,7 @@ from datetime import datetime
 from collections import defaultdict
 import random
 
-from utils import load_yaml, write_yaml, load_sample
+from utils import load_yaml, write_yaml, load_sample, load_audio
 
 
 def mix_audio(recipe_name):
@@ -14,7 +14,7 @@ def mix_audio(recipe_name):
     if not os.path.exists(recipe_file):
         raise ValueError(f"Recipe {recipe_name} does not exist in {RECIPES_DIR}.")
 
-    output_dir = os.path.join(RESULTS_DIR, f'{recipe_name}_{datetime.now().strftime("%Y%m%d%H%M%S")}')
+    output_dir = os.path.join(EFFECTS_DIR, f'{recipe_name}_{datetime.now().strftime("%Y%m%d%H%M%S")}')
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
@@ -55,6 +55,16 @@ def mix_audio(recipe_name):
     write_yaml(output_timestamps_file, timestamps)
 
     return mixed_audio, timestamps
+
+
+def add_audio_to_effect(audio_path, effect_id, before=True):
+    output_dir = os.path.join(EFFECTS_DIR, f'{audio_path}_{effect_id}')
+    os.makedirs(output_dir, exist_ok=True)
+
+    output_audio_file = os.path.join(output_dir, 'output.mp3')
+    output_timestamps_file = os.path.join(output_dir, 'timestamps.yaml')
+
+    audio, timestamps = load_sample(effect_id)
 
 
 if __name__ == '__main__':
