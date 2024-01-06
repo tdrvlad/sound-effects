@@ -71,6 +71,7 @@ def main(sample_id):
     button = RpiInput(BUTTON_PIN, action=action)
 
     try:
+        led_pin.turn_on()
         while True:
             time.sleep(0.1)
 
