@@ -1,0 +1,15 @@
+length: 35
+samples:
+  - name: "explosion"
+    frequency_range:
+      min: 3
+      max: 6
+  - name: "maxim_machine_gun"
+    frequency_range:
+      min: 0.5
+      max: 4
+  - name: "mannlicher_rifle"
+    frequency_range:
+      min: 0.5
+      max: 3
+

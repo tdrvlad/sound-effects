@@ -15,7 +15,8 @@ def mix_audio(recipe_name):
     if not os.path.exists(recipe_file):
         raise ValueError(f"Recipe {recipe_name} does not exist in {RECIPES_DIR}.")
 
-    output_dir = os.path.join(EFFECTS_DIR, f'{recipe_name}_{datetime.now().strftime("%Y%m%d%H%M%S")}')
+    recipe_id = f'{recipe_name}_{datetime.now().strftime("%Y%m%d%H%M%S")}'
+    output_dir = os.path.join(EFFECTS_DIR, recipe_id)
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
@@ -55,11 +56,13 @@ def mix_audio(recipe_name):
     mixed_audio.export(output_audio_file, format='mp3')
     write_yaml(output_timestamps_file, timestamps)
 
-    return mixed_audio, timestamps
+    return recipe_id
 
 
 def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before"):
-    output_dir = os.path.join(EFFECTS_DIR, f'{os.path.basename(audio_path)}_{effect_id}')
+
+    recipe_id = f'{os.path.basename(audio_path).split(".")[0]}_{effect_id}'
+    output_dir = os.path.join(EFFECTS_DIR, recipe_id)
     os.makedirs(output_dir, exist_ok=True)
 
     output_audio_file = os.path.join(output_dir, 'output.mp3')
@@ -81,7 +84,11 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
     result_audio.export(output_audio_file, format='mp3')
     write_yaml(output_timestamps_file, effect_timestamps)
 
+    return recipe_id
+
 
 if __name__ == '__main__':
-    # audio, timestamps = mix_audio('battle1')
-    add_audio_to_effect("./audio_samples/outro_battle.mp3", "final", position="after")
+    effect_id = mix_audio('battle_long')
+    effect_id = add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay")
+    effect_id = add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before")
+    effect_id = add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after")
