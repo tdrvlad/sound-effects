@@ -66,8 +66,10 @@ def control_leds(callable_dict, audio_player):
 def main(sample_id):
     led_pin = RpiPin(PANEL_LED_PIN)
 
-    def action():
+    def action(channel):
+        # Channel parameter is given to respect the callback definition
         load_audio_and_effects(sample_id)
+
     button = RpiInput(BUTTON_PIN, action=action)
 
     try:
