@@ -13,10 +13,10 @@ class RpiInput:
         self.press_time = press_time
         if pull_down:
             pull = GPIO.PUD_DOWN
-            self.pressed_state = GPIO.HIGH
+            self.pressed_state = GPIO.LOW
         else:
             pull = GPIO.PUD_UP
-            self.pressed_state = GPIO.LOW
+            self.pressed_state = GPIO.HIGH
 
         GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
 
