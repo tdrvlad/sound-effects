@@ -68,7 +68,11 @@ def main(sample_id):
 
     def action(channel):
         # Channel parameter is given to respect the callback definition
-        load_audio_and_effects(sample_id)
+        led_pin.turn_off()
+        # load_audio_and_effects(sample_id)
+        time.sleep(3)
+        led_pin.turn_on()
+
 
     button = RpiInput(BUTTON_PIN, action=action)
 
