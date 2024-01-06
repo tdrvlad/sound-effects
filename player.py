@@ -66,8 +66,7 @@ def control_leds(callable_dict, audio_player):
 def main(sample_id):
     led_pin = RpiPin(PANEL_LED_PIN)
 
-    def action(channel):
-        # Channel parameter is given to respect the callback definition
+    def action():
         led_pin.turn_off()
         # load_audio_and_effects(sample_id)
         time.sleep(3)
