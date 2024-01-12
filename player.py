@@ -121,7 +121,7 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
         intro_audio_player = AudioPlayer(intro_audio, volume_change=10)
         intro_audio_player.play()
 
-    audio_player = AudioPlayer(audio, volume_change=30)
+    audio_player = AudioPlayer(audio, volume_change=20)
 
     audio_thread = threading.Thread(target=audio_player.play)
     led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
@@ -133,9 +133,9 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
     led_thread.join()
 
     if outro_audio_path:
-        intro_audio = AudioSegment.from_mp3(intro_audio_path)
-        intro_audio_player = AudioPlayer(intro_audio, volume_change=10)
-        intro_audio_player.play()
+        outro_audio = AudioSegment.from_mp3(outro_audio_path)
+        outro_audio_player = AudioPlayer(outro_audio, volume_change=10)
+        outro_audio_player.play()
 
 
 def test_sample(sample_id):
