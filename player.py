@@ -101,6 +101,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     finally:
         led_pin.turn_off()
         GPIO.cleanup()
+        background_pin.turn_on()
 
         if outro_audio_path:
             outro_audio = AudioSegment.from_mp3(outro_audio_path)
