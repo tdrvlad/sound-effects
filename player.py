@@ -67,7 +67,7 @@ def control_leds(callable_dict, audio_player):
             time.sleep(0.01)
 
 
-def main(sample_id, intro_audio_path=None):
+def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     led_pin = RpiPin(PANEL_LED_PIN)
 
     for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
@@ -76,7 +76,11 @@ def main(sample_id, intro_audio_path=None):
 
     def action():
         led_pin.turn_off()
-        play_effect(sample_id, intro_audio_path=intro_audio_path)
+        play_effect(
+            sample_id,
+            intro_audio_path=intro_audio_path,
+            outro_audio_path=outro_audio_path
+        )
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN, action=action)
@@ -95,7 +99,7 @@ def main(sample_id, intro_audio_path=None):
         GPIO.cleanup()
 
 
-def play_effect(effect_id, intro_audio_path=None):
+def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
 
     audio, timestamps = load_effect(effect_id)
     sounds = list(timestamps.keys())
@@ -114,7 +118,7 @@ def play_effect(effect_id, intro_audio_path=None):
 
     if intro_audio_path:
         intro_audio = AudioSegment.from_mp3(intro_audio_path)
-        intro_audio_player = AudioPlayer(intro_audio, volume_change=20)
+        intro_audio_player = AudioPlayer(intro_audio, volume_change=10)
         intro_audio_player.play()
 
     audio_player = AudioPlayer(audio, volume_change=30)
@@ -127,6 +131,11 @@ def play_effect(effect_id, intro_audio_path=None):
 
     audio_thread.join()
     led_thread.join()
+
+    if outro_audio_path:
+        intro_audio = AudioSegment.from_mp3(intro_audio_path)
+        intro_audio_player = AudioPlayer(intro_audio, volume_change=10)
+        intro_audio_player.play()
 
 
 def test_sample(sample_id):
@@ -147,10 +156,9 @@ def test_sample(sample_id):
     led_thread.join()
 
 
-
 if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    # main("battle_long")
+    # main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
+    main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
