@@ -169,4 +169,4 @@ if __name__ == '__main__':
     # test_sample('explosion')
     # main("battle_short")
     # main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
+    main("battle_long", intro_audio_path="./audio_samples/doina.mp3", outro_audio_path='./audio_samples/outro_battle.mp3')
