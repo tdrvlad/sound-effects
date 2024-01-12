@@ -91,7 +91,7 @@ def main(sample_id):
         GPIO.cleanup()
 
 
-def play_effect(effect_id):
+def play_effect(effect_id, intro_audio_path=None):
 
     audio, timestamps = load_effect(effect_id)
     sounds = list(timestamps.keys())
@@ -107,6 +107,11 @@ def play_effect(effect_id):
     }
 
     actions = create_sounds_callable_dict(timestamps, pins)
+
+    if intro_audio_path:
+        intro_audio = AudioSegment.from_mp3(intro_audio_path)
+        intro_audio_player = AudioPlayer(intro_audio)
+        intro_audio_player.play()
 
     audio_player = AudioPlayer(audio)
 
