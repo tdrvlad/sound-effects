@@ -81,11 +81,10 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
         play_effect(
             sample_id,
             intro_audio_path=intro_audio_path,
-            outro_audio_path=outro_audio_path
+            # outro_audio_path=outro_audio_path
         )
         led_pin.turn_on()
         background_pin.turn_on()
-
 
     button = RpiInput(BUTTON_PIN, action=action)
 
@@ -102,6 +101,12 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     finally:
         led_pin.turn_off()
         GPIO.cleanup()
+
+        if outro_audio_path:
+            outro_audio = AudioSegment.from_mp3(outro_audio_path)
+            outro_audio_player = AudioPlayer(outro_audio, volume_change=10)
+            outro_audio_player.play()
+
 
 
 def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
