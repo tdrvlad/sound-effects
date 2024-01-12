@@ -67,12 +67,12 @@ def control_leds(callable_dict, audio_player):
             time.sleep(0.01)
 
 
-def main(sample_id):
+def main(sample_id, intro_audio_path=None):
     led_pin = RpiPin(PANEL_LED_PIN)
 
     def action():
         led_pin.turn_off()
-        play_effect(sample_id)
+        play_effect(sample_id, intro_audio_path=intro_audio_path)
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN, action=action)
@@ -148,5 +148,5 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    main("battle_long")
+    main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
     # main("battle_and_intro")
