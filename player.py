@@ -70,6 +70,10 @@ def control_leds(callable_dict, audio_player):
 def main(sample_id, intro_audio_path=None):
     led_pin = RpiPin(PANEL_LED_PIN)
 
+    for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
+        pin = RpiPin(pin_id)
+        pin.turn_off()
+
     def action():
         led_pin.turn_off()
         play_effect(sample_id, intro_audio_path=intro_audio_path)
