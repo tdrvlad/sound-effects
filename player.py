@@ -152,5 +152,5 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    # main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    main("battle_long")
+    main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
+    # main("battle_long")
