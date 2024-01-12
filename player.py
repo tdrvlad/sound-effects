@@ -114,10 +114,10 @@ def play_effect(effect_id, intro_audio_path=None):
 
     if intro_audio_path:
         intro_audio = AudioSegment.from_mp3(intro_audio_path)
-        intro_audio_player = AudioPlayer(intro_audio)
+        intro_audio_player = AudioPlayer(intro_audio, volume_change=20)
         intro_audio_player.play()
 
-    audio_player = AudioPlayer(audio)
+    audio_player = AudioPlayer(audio, volume_change=30)
 
     audio_thread = threading.Thread(target=audio_player.play)
     led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
@@ -152,5 +152,5 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    # main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    main("battle_long")
+    main("battle_long", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
+    # main("battle_long")
