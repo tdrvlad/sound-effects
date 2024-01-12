@@ -74,9 +74,9 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     background_pin = RpiPin(EFFECT_1_PIN)
     background_pin.turn_on()
 
-    for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
-        pin = RpiPin(pin_id)
-        pin.turn_off()
+    # for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
+    #     pin = RpiPin(pin_id)
+    #     pin.turn_off()
 
     def action():
         led_pin.turn_off()
