@@ -68,8 +68,11 @@ def control_leds(callable_dict, audio_player):
 
 
 def main(sample_id, intro_audio_path=None, outro_audio_path=None):
+    GPIO.cleanup()
+
     led_pin = RpiPin(PANEL_LED_PIN)
     background_pin = RpiPin(EFFECT_1_PIN)
+    background_pin.turn_on()
 
     for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
         pin = RpiPin(pin_id)
@@ -101,7 +104,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
 
     finally:
         led_pin.turn_off()
-        # GPIO.cleanup()
+        GPIO.cleanup()
 
 
 def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, background_pin=None):
