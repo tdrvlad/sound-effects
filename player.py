@@ -104,6 +104,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
 
     finally:
         led_pin.turn_off()
+        background_pin.turn_on()
         GPIO.cleanup()
 
 
