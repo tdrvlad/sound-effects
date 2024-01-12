@@ -101,7 +101,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
 
     finally:
         led_pin.turn_off()
-        GPIO.cleanup()
+        # GPIO.cleanup()
 
 
 def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, background_pin=None):
