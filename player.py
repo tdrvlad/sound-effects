@@ -69,6 +69,7 @@ def control_leds(callable_dict, audio_player):
 
 def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     led_pin = RpiPin(PANEL_LED_PIN)
+    background_pin = RpiPin(EFFECT_1_PIN)
 
     for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
         pin = RpiPin(pin_id)
@@ -76,17 +77,21 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
 
     def action():
         led_pin.turn_off()
+        background_pin.turn_off()
         play_effect(
             sample_id,
             intro_audio_path=intro_audio_path,
             outro_audio_path=outro_audio_path
         )
         led_pin.turn_on()
+        background_pin.turn_on()
+
 
     button = RpiInput(BUTTON_PIN, action=action)
 
     try:
         led_pin.turn_on()
+        background_pin.turn_on()
         while True:
             time.sleep(0.1)
             button.check_pressed()
