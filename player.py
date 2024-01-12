@@ -81,7 +81,8 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
         play_effect(
             sample_id,
             intro_audio_path=intro_audio_path,
-            # outro_audio_path=outro_audio_path
+            outro_audio_path=outro_audio_path,
+            background_pin=background_pin
         )
         led_pin.turn_on()
         background_pin.turn_on()
@@ -101,16 +102,9 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
     finally:
         led_pin.turn_off()
         GPIO.cleanup()
-        background_pin.turn_on()
-
-        if outro_audio_path:
-            outro_audio = AudioSegment.from_mp3(outro_audio_path)
-            outro_audio_player = AudioPlayer(outro_audio, volume_change=10)
-            outro_audio_player.play()
 
 
-
-def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
+def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, background_pin=None):
 
     audio, timestamps = load_effect(effect_id)
     sounds = list(timestamps.keys())
@@ -144,6 +138,9 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None):
     led_thread.join()
 
     if outro_audio_path:
+        if background_pin is not None:
+            background_pin.turn_on()
+
         outro_audio = AudioSegment.from_mp3(outro_audio_path)
         outro_audio_player = AudioPlayer(outro_audio, volume_change=10)
         outro_audio_player.play()
