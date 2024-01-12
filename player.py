@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 
 
 class AudioPlayer:
-    def __init__(self, audio, delay=-3, volume_change=15):
+    def __init__(self, audio, delay=-3, volume_change=20):
         self.audio = audio
 
         if volume_change:
