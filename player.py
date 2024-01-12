@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 
 
 class AudioPlayer:
-    def __init__(self, audio, delay=-2.8, volume_change=20):
+    def __init__(self, audio, delay=-0.6, volume_change=20):
         self.audio = audio
 
         if volume_change:
@@ -138,9 +138,10 @@ def test_sample(sample_id):
     led_thread.join()
 
 
+
 if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
-    test_sample('explosion')
+    # test_sample('explosion')
     # main("battle_short")
-    # main("battle_long")
+    main("battle_long")
     # main("battle_and_intro")
