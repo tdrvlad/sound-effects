@@ -33,7 +33,7 @@ class RpiPin:
     on = GPIO.LOW
     off = GPIO.HIGH
 
-    def __init__(self, pin_id, reverse=True):
+    def __init__(self, pin_id, reverse=False):
         self.pin_id = pin_id
 
         if reverse:
