@@ -19,8 +19,8 @@ def create_sound_callable_dict(sound_timestamps_dict, pin: RpiPin):
 def create_sounds_callable_dict(sounds_timestamps_dict, pins):
     callable_dict = {}
     for sound, sound_timestamps_dict in sounds_timestamps_dict.items():
-        if sound not in pins:
-            raise ValueError(f"No GPIO pin associated to sound {sound}")
+        # if sound not in pins:
+        #     raise ValueError(f"No GPIO pin associated to sound {sound}")
         pin = pins[sound]
         callable_dict.update(create_sound_callable_dict(sound_timestamps_dict, pin))
     return dict(sorted(callable_dict.items()))
