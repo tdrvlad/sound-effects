@@ -3,14 +3,14 @@ samples:
   - name: "explosion"
     frequency_range:
       min: 3
-      max: 6
+      max: 7
   - name: "maxim_machine_gun"
     frequency_range:
       min: 0.5
       max: 3.5
   - name: "falling_bomb"
     frequency_range:
-      min: 2
+      min: 3
       max: 7
   - name: "mannlicher_rifle"
     frequency_range:
