@@ -1,5 +1,5 @@
 import time
-from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, EFFECT_4_PIN, BUTTON_PULL_DOWN
+from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, EFFECT_4_PIN, BUTTON_PULL_DOWN, BUTTON_PIN_1, BUTTON_PIN_2, BUTTON_PI_3
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -65,11 +65,21 @@ def test_pin(pin_id):
     pin.turn_off()
 
 
-if __name__ == "__main__":
-    for _ in range(100):
-        test_pin(EFFECT_4_PIN)
-        time.sleep(1)
+def test_button(pin_id):
+    print(f"Testing input from GPIO pin {pin_id}")
+    button = RpiInput(pin_id)
+    while True:
+        if button.check_pressed():
+            print("Pressed")
+        time.sleep(0.1)
 
+
+if __name__ == "__main__":
+    # for _ in range(100):
+    #     test_pin(EFFECT_4_PIN)
+    #     time.sleep(1)
+
+    test_button(BUTTON_PIN_1)
     # pin = RpiPin(PANEL_LED_PIN)
     # pin.turn_on()
 

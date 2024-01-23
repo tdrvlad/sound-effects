@@ -1,6 +1,6 @@
 import os
 import time
-from paths import EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN
+from paths import EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
 from utils import load_yaml, load_sample, load_effect
 from pydub.playback import play
 import threading
@@ -90,7 +90,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
         led_pin.turn_on()
         background_pin.turn_on()
 
-    button = RpiInput(BUTTON_PIN, action=action)
+    button = RpiInput(BUTTON_PIN_1, action=action)
 
     try:
         led_pin.turn_on()
