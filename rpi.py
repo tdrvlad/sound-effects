@@ -79,6 +79,7 @@ def test_button(pin_id):
     while True:
         button.check_pressed()
         time.sleep(0.1)
+        print(".")
 
 
 if __name__ == "__main__":
