@@ -67,7 +67,7 @@ def test_pin(pin_id):
 
 if __name__ == "__main__":
     for _ in range(100):
-        test_pin(EFFECT_3_PIN)
+        test_pin(EFFECT_4_PIN)
         time.sleep(1)
 
     # pin = RpiPin(PANEL_LED_PIN)
