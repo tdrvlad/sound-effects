@@ -68,10 +68,13 @@ def test_pin(pin_id):
 
 def test_button(pin_id):
     print(f"Testing input from GPIO pin {pin_id}")
-    button = RpiInput(pin_id)
+
+    def print_pressed():
+        print("Pressed")
+
+    button = RpiInput(pin_id, action=print_pressed)
     while True:
-        if button.check_pressed():
-            print("Pressed")
+        button.check_pressed()
         time.sleep(0.1)
 
 
