@@ -35,7 +35,7 @@ def load_sample(sample_id):
     return audio, sample_timestamps
 
 
-def load_effect(effect_id):
+def load_effect(effect_id, return_audio=False):
     effect_dir = os.path.join(EFFECTS_DIR, effect_id)
     if not os.path.exists(effect_dir):
         raise ValueError(f"Effect {effect_id} not found.")

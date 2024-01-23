@@ -1,0 +1,15 @@
+length: 45
+samples:
+  - name: "explosion"
+    frequency_range:
+      min: 3
+      max: 5
+  - name: "maxim_machine_gun"
+    frequency_range:
+      min: 0.5
+      max: 4
+  - name: "falling_bomb"
+    frequency_range:
+      min: 1
+      max: 5
+
