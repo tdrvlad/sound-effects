@@ -82,7 +82,7 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    test_output(EFFECT_3_PIN)
+    test_output(EFFECT_2_PIN)
 
     # test_button(BUTTON_PIN_1)
     # pin = RpiPin(PANEL_LED_PIN)
