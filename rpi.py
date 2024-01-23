@@ -79,11 +79,11 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    # for _ in range(100):
-    #     test_pin(EFFECT_4_PIN)
-    #     time.sleep(1)
+    for _ in range(100):
+        test_pin(EFFECT_2_PIN)
+        time.sleep(1)
 
-    test_button(BUTTON_PIN_1)
+    # test_button(BUTTON_PIN_1)
     # pin = RpiPin(PANEL_LED_PIN)
     # pin.turn_on()
 
