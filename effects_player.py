@@ -1,6 +1,6 @@
 import time
 from audio_player import AudioPlayer
-from paths import EFFECTS_MAP, EFFECT_1_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
+from paths import EFFECTS_MAP, EFFECT_1_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1, BUTTON_PIN_2, BUTTON_PIN_3
 from utils import load_sample, load_effect, get_audio_player
 import threading
 from rpi import RpiPin, RpiInput
@@ -59,7 +59,56 @@ def get_effects_pins(effects_map=EFFECTS_MAP):
     return effects_pins
 
 
-def main(effect_id, intro_audio_path=None, outro_audio_path=None):
+# def main(effect_id, intro_audio_path=None, outro_audio_path=None):
+#     print("Initializing effects.")
+#     led_pin = RpiPin(PANEL_LED_PIN, reverse=False)
+#
+#     effects_pins = get_effects_pins(EFFECTS_MAP)
+#
+#     audio_player, timestamps = load_effect(effect_id)
+#     actions = create_sounds_callable_dict(timestamps, effects_pins)
+#
+#     intro_audio_player = get_audio_player(intro_audio_path)
+#     outro_audio_player = get_audio_player(outro_audio_path)
+#
+#     if not 'background' in effects_pins:
+#         raise ValueError('No GPIO pin defined for background')
+#
+#     background_pin = effects_pins['background']
+#     background_pin.turn_on()
+#
+#     print(f"Loaded effects: {', '.join(effects_pins.keys())}")
+#
+#     def action():
+#         led_pin.turn_off()
+#         play_effect(
+#             actions=actions,
+#             effects_audio_player=audio_player,
+#             intro_audio_player=intro_audio_player,
+#             outro_audio_player=outro_audio_player,
+#             background_pin=background_pin
+#         )
+#         led_pin.turn_on()
+#
+#     button = RpiInput(BUTTON_PIN_1, action=action)
+#
+#     try:
+#         led_pin.turn_on()
+#         print('Ready.')
+#         while True:
+#             time.sleep(0.1)
+#             button.check_pressed()
+#
+#     except Exception as e:
+#         raise e
+#
+#     finally:
+#         led_pin.turn_off()
+#         background_pin.turn_on()
+#         GPIO.cleanup()
+
+
+def main(effect_id, audio_paths):
     print("Initializing effects.")
     led_pin = RpiPin(PANEL_LED_PIN, reverse=False)
 
@@ -68,8 +117,14 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     audio_player, timestamps = load_effect(effect_id)
     actions = create_sounds_callable_dict(timestamps, effects_pins)
 
-    intro_audio_player = get_audio_player(intro_audio_path)
-    outro_audio_player = get_audio_player(outro_audio_path)
+    # Load audio players for each intro and outro
+    audio_players = {}
+    for button, paths in audio_paths.items():
+        intro_path, outro_path = paths
+        audio_players[button] = (
+            get_audio_player(intro_path),
+            get_audio_player(outro_path)
+        )
 
     if not 'background' in effects_pins:
         raise ValueError('No GPIO pin defined for background')
@@ -79,8 +134,9 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
 
     print(f"Loaded effects: {', '.join(effects_pins.keys())}")
 
-    def action():
+    def action(button):
         led_pin.turn_off()
+        intro_audio_player, outro_audio_player = audio_players[button]
         play_effect(
             actions=actions,
             effects_audio_player=audio_player,
@@ -90,14 +146,22 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
         )
         led_pin.turn_on()
 
-    button = RpiInput(BUTTON_PIN_1, action=action)
+    buttons = {
+        BUTTON_PIN_1: lambda: action(BUTTON_PIN_1),
+        BUTTON_PIN_2: lambda: action(BUTTON_PIN_2),
+        BUTTON_PIN_3: lambda: action(BUTTON_PIN_3)
+    }
+
+    for pin, button_action in buttons.items():
+        RpiInput(pin, action=button_action)
 
     try:
         led_pin.turn_on()
         print('Ready.')
         while True:
             time.sleep(0.1)
-            button.check_pressed()
+            for button in buttons.values():
+                button.check_pressed()
 
     except Exception as e:
         raise e
@@ -106,6 +170,7 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
         led_pin.turn_off()
         background_pin.turn_on()
         GPIO.cleanup()
+
 
 
 def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_audio_player=None, background_pin=None, background_while_intro=False, background_while_outro=True):
@@ -135,28 +200,21 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
     background_pin.turn_on()
 
 
-def test_sample(sample_id):
-    print("Test")
-    audio, sample_timestamps = load_sample(sample_id)
-
-    pin = RpiPin(EFFECT_1_PIN)
-    actions = create_sound_callable_dict(sample_timestamps, pin)
-    print(actions)
-
-    audio_player = AudioPlayer(audio)
-    audio_thread = threading.Thread(target=audio_player.play)
-    led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
-
-    audio_thread.start()
-    led_thread.start()
-
-    audio_thread.join()
-    led_thread.join()
 
 
 if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    main("battle_v2",  intro_audio_path='./audio_samples/doina_short.mp3', outro_audio_path='./audio_samples/outro_battle.mp3')
+
+    audio_paths = {
+        BUTTON_PIN_1: ("./audio_samples/intro_ro.mp3", "./audio_samples/outro_battle.mp3"),
+        BUTTON_PIN_2: ("./audio_samples/intro_en.mp3", "./audio_samples/outro_battle.mp3"),
+        BUTTON_PIN_3: ("./audio_samples/intro_doina.mp3", "./audio_samples/outro_battle.mp3"),
+    }
+    main(effect_id="battle_v2", audio_paths=audio_paths)
+
+
+
+    # main("battle_v2",  intro_audio_path='./audio_samples/doina_short.mp3', outro_audio_path='./audio_samples/outro_battle.mp3')
     # main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
