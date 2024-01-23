@@ -171,7 +171,7 @@ def test_sample(sample_id):
 
 if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
-    test_sample('explosion')
+    # test_sample('explosion')
     # main("battle_short")
     # main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    # main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
+    main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
