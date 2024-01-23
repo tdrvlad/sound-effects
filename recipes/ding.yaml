@@ -1,6 +1,0 @@
-length: 30
-samples:
-  - name: "ding"
-    frequency_range:
-      min: 1.5
-      max: 3.0
