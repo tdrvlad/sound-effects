@@ -18,6 +18,7 @@ BUTTON_PULL_DOWN = False
 RECIPE_LENGTH = 'length'
 RECIPE_SAMPLES = 'samples'
 RECIPE_SAMPLE_NAME = 'name'
+RECIPE_SAMPLE_NAME = 'name'
 RECIPE_SAMPLE_FREQUENCY = 'frequency_range'
 RECIPE_SAMPLE_FREQUENCY_MIN = 'min'
 RECIPE_SAMPLE_FREQUENCY_MAX = 'max'
@@ -28,5 +29,6 @@ EFFECTS_MAP = {
     "maxim_machine_gun": EFFECT_2_PIN,
     "explosion": EFFECT_1_PIN,
     "falling_bomb": EFFECT_3_PIN,
+    "mannlicher_rifle": EFFECT_4_PIN,
     "background": EFFECT_1_PIN
 }
