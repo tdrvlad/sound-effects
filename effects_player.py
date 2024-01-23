@@ -1,32 +1,10 @@
 import time
+from audio_player import AudioPlayer
 from paths import EFFECTS_MAP, EFFECT_1_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
 from utils import load_sample, load_effect, get_audio_player
-from pydub.playback import play
 import threading
 from rpi import RpiPin, RpiInput
 import RPi.GPIO as GPIO
-
-
-class AudioPlayer:
-    def __init__(self, audio, delay=-0.6, volume_change=0):
-        self.audio = audio
-
-        if volume_change:
-            self.audio = self.audio + volume_change
-
-        self.play_obj = None
-        self.start_time = None
-        self.delay = delay
-
-    def play(self):
-        self.start_time = time.time()
-        self.play_obj = play(self.audio)
-
-    def current_playback_time(self):
-        if self.start_time is None:
-            return 0
-        current_playback_time = time.time() - self.start_time + self.delay
-        return current_playback_time
 
 
 def create_sound_callable_dict(sound_timestamps_dict, pin: RpiPin):

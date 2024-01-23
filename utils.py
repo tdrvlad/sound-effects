@@ -2,8 +2,7 @@ import yaml
 import os
 from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE
 from pydub import AudioSegment
-
-from player import AudioPlayer
+from audio_player import AudioPlayer
 
 
 def load_yaml(file_path):
