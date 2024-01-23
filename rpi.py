@@ -71,7 +71,7 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    pin = RpiPin(EFFECT_2_PIN)
+    pin = RpiPin(EFFECT_3_PIN)
     for _ in range(100):
         pin.turn_on()
         time.sleep(1)
