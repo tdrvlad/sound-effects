@@ -91,7 +91,7 @@ def get_audio_player(audio_path):
 
 def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     print("Initializing effects.")
-    led_pin = RpiPin(PANEL_LED_PIN)
+    led_pin = RpiPin(PANEL_LED_PIN, reverse=False)
 
     effects_pins = get_effects_pins(EFFECTS_MAP)
 
@@ -120,6 +120,7 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
         # )
         print('Action')
         time.sleep(5)
+        print("Done")
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN_1, action=action)
