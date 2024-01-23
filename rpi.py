@@ -58,14 +58,6 @@ class RpiPin:
             GPIO.output(self.pin_id, self.on)
 
 
-def test_pin(pin_id):
-    print(f"Testing GPIO pin {pin_id}.")
-    pin = RpiPin(pin_id)
-    pin.turn_on()
-    time.sleep(1)
-    pin.turn_off()
-
-
 def test_button(pin_id):
     print(f"Testing input from GPIO pin {pin_id}")
 
@@ -79,8 +71,11 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
+    pin = RpiPin(EFFECT_3_PIN)
     for _ in range(100):
-        test_pin(EFFECT_3_PIN)
+        pin.turn_on()
+        time.sleep(1)
+        pin.turn_off()
         time.sleep(1)
 
     # test_button(BUTTON_PIN_1)
