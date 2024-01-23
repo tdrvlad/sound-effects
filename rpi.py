@@ -1,5 +1,5 @@
 import time
-from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, BUTTON_PULL_DOWN, BUTTON_PIN_1, BUTTON_PIN_2, BUTTON_PIN_3
+from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, BUTTON_PULL_DOWN, BUTTON_PIN_1, BUTTON_PIN_2, BUTTON_PIN_3, EFFECT_4_PIN
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -83,7 +83,7 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    test_output(PANEL_LED_PIN )
+    test_output(EFFECT_4_PIN)
 
     # test_button(BUTTON_PIN_3)
     # pin = RpiPin(PANEL_LED_PIN)

@@ -111,7 +111,7 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
     print("Playing effect.")
     if intro_audio_player:
         print("Playing intro.")
-        if not background_while_intro:
+        if background_while_intro:
             intro_audio_player.play()
             background_pin.turn_off()
         else:
