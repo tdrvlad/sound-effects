@@ -80,7 +80,7 @@ def test_button(pin_id):
 
 if __name__ == "__main__":
     for _ in range(100):
-        test_pin(EFFECT_3_PIN)
+        test_pin(EFFECT_2_PIN)
         time.sleep(1)
 
     # test_button(BUTTON_PIN_1)
