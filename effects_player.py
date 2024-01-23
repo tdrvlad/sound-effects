@@ -111,12 +111,10 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
     print("Playing effect.")
     if intro_audio_player:
         print("Playing intro.")
-        if background_while_intro:
-            intro_audio_player.play()
+        if not background_while_intro:
             background_pin.turn_off()
-        else:
-            background_pin.turn_off()
-            intro_audio_player.play()
+        intro_audio_player.play()
+    background_pin.turn_off()
 
     audio_thread = threading.Thread(target=effects_audio_player.play)
     led_thread = threading.Thread(target=control_leds, args=(actions, effects_audio_player))
@@ -131,10 +129,8 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
         print("Playing outro.")
         if background_while_outro:
             background_pin.turn_on()
-            outro_audio_player.play()
-        else:
-            outro_audio_player.play()
-            background_pin.turn_on()
+        outro_audio_player.play()
+    background_pin.turn_on()
 
 
 def test_sample(sample_id):

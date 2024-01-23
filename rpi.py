@@ -29,33 +29,42 @@ class RpiInput:
                     self.action()
 
 class RpiPin:
+    state = None
+    on = GPIO.LOW
+    off = GPIO.HIGH
+
     def __init__(self, pin_id, reverse=True):
         self.pin_id = pin_id
 
-        # Turning on Relays means their input should be low
-        self.on = GPIO.HIGH
-        self.off = GPIO.LOW
-
         if reverse:
-            self.on = GPIO.LOW
-            self.off = GPIO.HIGH
+            self.on, self.off = self.off, self.on
 
         GPIO.setup(self.pin_id, GPIO.OUT, initial=self.off)
         self.turn_off()
 
+    def _turn_on(self):
+        if not self.state is self.on:
+            GPIO.output(self.pin_id, self.on)
+            self.state = self.on
+
+    def _turn_off(self):
+        if not self.state is self.off:
+            GPIO.output(self.pin_id, self.off)
+            self.state = self.off
+
     def turn_on(self, time_interval=None):
         print(f"Turn on {self.pin_id}.")
-        GPIO.output(self.pin_id, self.on)
+        self._turn_on()
         if time_interval is not None:
             time.sleep(time_interval)
-            GPIO.output(self.pin_id, self.off)
+            self._turn_off()
 
     def turn_off(self, time_interval=None):
         print(f"Turn off {self.pin_id}.")
-        GPIO.output(self.pin_id, self.off)
+        self._turn_off()
         if time_interval is not None:
             time.sleep(time_interval)
-            GPIO.output(self.pin_id, self.on)
+            self._turn_on()
 
 
 def test_output(pin_id, pause=2):
