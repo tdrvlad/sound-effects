@@ -3,6 +3,8 @@ import os
 from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE
 from pydub import AudioSegment
 
+from player import AudioPlayer
+
 
 def load_yaml(file_path):
     with open(file_path, 'r') as file:
@@ -45,10 +47,10 @@ def load_effect(effect_id):
     if not os.path.exists(timestamps_file):
         raise ValueError(f"Timestamps {timestamps_file} not found.")
 
-    audio = AudioSegment.from_mp3(audio_file)
+    audio_player = get_audio_player(audio_file)
     timestamps = load_yaml(timestamps_file)
 
-    return audio, timestamps
+    return audio_player, timestamps
 
 
 def add_delay_to_timestamps(timestamps_dict, delta):
@@ -57,3 +59,9 @@ def add_delay_to_timestamps(timestamps_dict, delta):
             time_data[time_type] = [timestamp + delta for timestamp in time_data[time_type]]
 
 
+def get_audio_player(audio_path):
+    if audio_path:
+        audio = AudioSegment.from_mp3(audio_path)
+        audio_player = AudioPlayer(audio)
+        return audio_player
+    return None

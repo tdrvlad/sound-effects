@@ -1,10 +1,8 @@
-import os
 import time
-from paths import EFFECTS_MAP, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
-from utils import load_yaml, load_sample, load_effect
+from paths import EFFECTS_MAP, EFFECT_1_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
+from utils import load_sample, load_effect, get_audio_player
 from pydub.playback import play
 import threading
-from pydub import AudioSegment
 from rpi import RpiPin, RpiInput
 import RPi.GPIO as GPIO
 
@@ -81,21 +79,13 @@ def get_effects_pins(effects_map=EFFECTS_MAP):
     return effects_pins
 
 
-def get_audio_player(audio_path):
-    if audio_path:
-        audio = AudioSegment.from_mp3(audio_path)
-        audio_player = AudioPlayer(audio)
-        return audio_player
-    return None
-
-
 def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     print("Initializing effects.")
     led_pin = RpiPin(PANEL_LED_PIN, reverse=False)
 
     effects_pins = get_effects_pins(EFFECTS_MAP)
 
-    audio, timestamps = load_effect(effect_id)
+    audio_player, timestamps = load_effect(effect_id)
     actions = create_sounds_callable_dict(timestamps, effects_pins)
 
     intro_audio_player = get_audio_player(intro_audio_path)
@@ -113,7 +103,7 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
         led_pin.turn_off()
         play_effect(
             actions=actions,
-            effects_audio_player=audio,
+            effects_audio_player=audio_player,
             intro_audio_player=intro_audio_player,
             outro_audio_player=outro_audio_player,
             background_pin=background_pin
