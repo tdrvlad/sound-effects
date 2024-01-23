@@ -151,6 +151,7 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, backgro
 
 
 def test_sample(sample_id):
+    print("Test")
     audio, sample_timestamps = load_sample(sample_id)
 
     pin = RpiPin(EFFECT_1_PIN)
