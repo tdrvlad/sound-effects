@@ -107,7 +107,7 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     background_pin = effects_pins['background']
     background_pin.turn_on()
 
-    print(f"Loaded effects: {effects_pins.items()}")
+    print(f"Loaded effects: {', '.join(effects_pins.keys())}")
 
     def action():
         led_pin.turn_off()
