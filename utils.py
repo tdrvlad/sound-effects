@@ -60,6 +60,7 @@ def add_delay_to_timestamps(timestamps_dict, delta):
 
 def get_audio_player(audio_path):
     if audio_path:
+        print(f"Loading audio {audio_path}.")
         audio = AudioSegment.from_mp3(audio_path)
         audio_player = AudioPlayer(audio)
         return audio_player
