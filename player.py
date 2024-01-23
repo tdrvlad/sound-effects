@@ -111,16 +111,13 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
 
     def action():
         led_pin.turn_off()
-        # play_effect(
-        #     actions=actions,
-        #     effects_audio_player=audio,
-        #     intro_audio_player=intro_audio_player,
-        #     outro_audio_player=outro_audio_player,
-        #     background_pin=background_pin
-        # )
-        print('Action')
-        time.sleep(5)
-        print("Done")
+        play_effect(
+            actions=actions,
+            effects_audio_player=audio,
+            intro_audio_player=intro_audio_player,
+            outro_audio_player=outro_audio_player,
+            background_pin=background_pin
+        )
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN_1, action=action)
