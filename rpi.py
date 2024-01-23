@@ -1,5 +1,5 @@
 import time
-from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, BUTTON_PULL_DOWN
+from paths import PANEL_LED_PIN, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, EFFECT_4_PIN, BUTTON_PULL_DOWN
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -67,7 +67,7 @@ def test_pin(pin_id):
 
 if __name__ == "__main__":
     for _ in range(100):
-        test_pin(EFFECT_1_PIN)
+        test_pin(EFFECT_2_PIN)
         time.sleep(1)
 
     # pin = RpiPin(PANEL_LED_PIN)
