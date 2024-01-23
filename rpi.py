@@ -76,7 +76,7 @@ if __name__ == "__main__":
         pin.turn_on()
         time.sleep(1)
         pin.turn_off()
-        time.sleep(1)
+        time.sleep(3)
 
     # test_button(BUTTON_PIN_1)
     # pin = RpiPin(PANEL_LED_PIN)
