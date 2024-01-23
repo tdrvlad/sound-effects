@@ -22,3 +22,9 @@ RECIPE_SAMPLE_FREQUENCY_MIN = 'min'
 RECIPE_SAMPLE_FREQUENCY_MAX = 'max'
 TIMESTAMPS_START = 'start'
 TIMESTAMPS_END = 'stop'
+
+EFFECTS_MAP = {
+    "maxim_machine_gun": EFFECT_2_PIN,
+    "explosion": EFFECT_1_PIN,
+    "background": EFFECT_1_PIN
+}

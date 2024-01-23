@@ -1,6 +1,6 @@
 import os
 import time
-from paths import EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
+from paths import EFFECTS_MAP, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN, TIMESTAMPS_START, TIMESTAMPS_END, PANEL_LED_PIN, BUTTON_PIN_1
 from utils import load_yaml, load_sample, load_effect
 from pydub.playback import play
 import threading
@@ -43,6 +43,8 @@ def create_sound_callable_dict(sound_timestamps_dict, pin: RpiPin):
 def create_sounds_callable_dict(sounds_timestamps_dict, pins):
     callable_dict = {}
     for sound, sound_timestamps_dict in sounds_timestamps_dict.items():
+        if sound not in pins:
+            raise ValueError(f"No GPIO pin associated to sound {sound}")
         pin = pins[sound]
         callable_dict.update(create_sound_callable_dict(sound_timestamps_dict, pin))
     return dict(sorted(callable_dict.items()))
@@ -67,34 +69,59 @@ def control_leds(callable_dict, audio_player):
             time.sleep(0.01)
 
 
-def main(sample_id, intro_audio_path=None, outro_audio_path=None):
-    GPIO.cleanup()
+def get_effects_pins(effects_map=EFFECTS_MAP):
+    pin_instances = {}
+    effects_pins = {}
 
+    for effect, pin_id in effects_map.items():
+        if pin_id not in pin_instances:
+            pin_instances[pin_id] = RpiPin(pin_id)
+
+        effects_pins[effect] = pin_instances[pin_id]
+    return effects_pins
+
+
+def get_audio_player(audio_path):
+    if audio_path:
+        audio = AudioSegment.from_mp3(audio_path)
+        audio_player = AudioPlayer(audio)
+        return audio_player
+    return None
+
+
+def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     led_pin = RpiPin(PANEL_LED_PIN)
-    background_pin = RpiPin(EFFECT_1_PIN)
-    background_pin.turn_on()
 
-    # for pin_id in [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN]:
-    #     pin = RpiPin(pin_id)
-    #     pin.turn_off()
+    effects_pins = get_effects_pins(EFFECTS_MAP)
+
+    audio, timestamps = load_effect(effect_id)
+    sounds = list(timestamps.keys())
+    actions = create_sounds_callable_dict(timestamps, effects_pins)
+
+    intro_audio_player = get_audio_player(intro_audio_path)
+    outro_audio_player = get_audio_player(outro_audio_path)
+
+    if not 'background' in effects_pins:
+        raise ValueError('No GPIO pin defined for background')
+
+    background_pin = effects_pins['background']
+    background_pin.turn_on()
 
     def action():
         led_pin.turn_off()
-        background_pin.turn_off()
         play_effect(
-            sample_id,
-            intro_audio_path=intro_audio_path,
-            outro_audio_path=outro_audio_path,
+            actions=actions,
+            effects_audio_player=audio,
+            intro_audio_player=intro_audio_player,
+            outro_audio_player=outro_audio_player,
             background_pin=background_pin
         )
         led_pin.turn_on()
-        background_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN_1, action=action)
 
     try:
         led_pin.turn_on()
-        background_pin.turn_on()
         while True:
             time.sleep(0.1)
             button.check_pressed()
@@ -108,33 +135,18 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
         GPIO.cleanup()
 
 
-def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, background_pin=None):
+def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_audio_player=None, background_pin=None, background_while_intro=False, background_while_outro=True):
 
-    print("Starting effect.")
-    audio, timestamps = load_effect(effect_id)
-    sounds = list(timestamps.keys())
-    print(f'Loaded timestamps for sounds: {", ".join(sounds)}')
-    if len(sounds) > 3:
-        raise ValueError("System configured for only 3 sound effects")
+    if intro_audio_player:
+        if not background_while_intro:
+            intro_audio_player.play()
+            background_pin.turn_off()
+        else:
+            background_pin.turn_off()
+            intro_audio_player.play()
 
-    pin_mapping = {sound: pin for sound, pin in zip(sounds, [EFFECT_1_PIN, EFFECT_2_PIN, EFFECT_3_PIN])}
-    audio_length = len(audio) / 1000.0  # Audio length in seconds
-
-    pins = {
-        sound: RpiPin(pin) for sound, pin in pin_mapping.items()
-    }
-
-    actions = create_sounds_callable_dict(timestamps, pins)
-
-    if intro_audio_path:
-        intro_audio = AudioSegment.from_mp3(intro_audio_path)
-        intro_audio_player = AudioPlayer(intro_audio)
-        intro_audio_player.play()
-
-    audio_player = AudioPlayer(audio)
-
-    audio_thread = threading.Thread(target=audio_player.play)
-    led_thread = threading.Thread(target=control_leds, args=(actions, audio_player))
+    audio_thread = threading.Thread(target=effects_audio_player.play)
+    led_thread = threading.Thread(target=control_leds, args=(actions, effects_audio_player))
 
     audio_thread.start()
     led_thread.start()
@@ -142,13 +154,13 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, backgro
     audio_thread.join()
     led_thread.join()
 
-    if outro_audio_path:
-        if background_pin is not None:
+    if outro_audio_player:
+        if background_while_outro:
             background_pin.turn_on()
-
-        outro_audio = AudioSegment.from_mp3(outro_audio_path)
-        outro_audio_player = AudioPlayer(outro_audio)
-        outro_audio_player.play()
+            outro_audio_player.play()
+        else:
+            outro_audio_player.play()
+            background_pin.turn_on()
 
 
 def test_sample(sample_id):
@@ -174,5 +186,5 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    # main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
+    main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
+    # main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
