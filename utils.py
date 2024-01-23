@@ -1,6 +1,6 @@
 import yaml
 import os
-from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE
+from paths import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, TIMESTAMPS_START, TIMESTAMPS_END
 from pydub import AudioSegment
 from audio_player import AudioPlayer
 
@@ -25,13 +25,14 @@ def load_sample(sample_id):
     timestamps_file = os.path.join(AUDIO_SAMPLES_TIMESTAMPS_DIR, f'{sample_id}.yaml')
 
     if not os.path.exists(audio_file):
-        raise ValueError(f"Audio {sample_id}.mp3 does not exist in {AUDIO_SAMPLES_DIR}.")
-    if not os.path.exists(timestamps_file):
-        raise ValueError(
-            f"Audio Timestamps {sample_id}.yaml does not exist in {AUDIO_SAMPLES_TIMESTAMPS_DIR}.")
+        raise ValueError(f"Audio {sample_id} does not exist in {AUDIO_SAMPLES_DIR}.")
+    if os.path.exists(timestamps_file):
+        sample_timestamps = load_yaml(timestamps_file)
+    else:
+        sample_timestamps = {TIMESTAMPS_START: [], TIMESTAMPS_END: []}
+        print(f"No audio Timestamps found for {sample_id} in {AUDIO_SAMPLES_TIMESTAMPS_DIR}.")
 
     audio = load_audio(audio_file)
-    sample_timestamps = load_yaml(timestamps_file)
     return audio, sample_timestamps
 
 

@@ -12,4 +12,12 @@ samples:
     frequency_range:
       min: 1
       max: 5
+  - name: "mannlicher_rifle"
+    frequency_range:
+      min: 1
+      max: 4
+  - name: "mannlicher_rifle"
+    frequency_range:
+      min: 1
+      max: 4
 
