@@ -90,12 +90,12 @@ def get_audio_player(audio_path):
 
 
 def main(effect_id, intro_audio_path=None, outro_audio_path=None):
+    print("Initializing effects.")
     led_pin = RpiPin(PANEL_LED_PIN)
 
     effects_pins = get_effects_pins(EFFECTS_MAP)
 
     audio, timestamps = load_effect(effect_id)
-    sounds = list(timestamps.keys())
     actions = create_sounds_callable_dict(timestamps, effects_pins)
 
     intro_audio_player = get_audio_player(intro_audio_path)
@@ -107,21 +107,26 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
     background_pin = effects_pins['background']
     background_pin.turn_on()
 
+    print(f"Loaded effects: {effects_pins.items()}")
+
     def action():
         led_pin.turn_off()
-        play_effect(
-            actions=actions,
-            effects_audio_player=audio,
-            intro_audio_player=intro_audio_player,
-            outro_audio_player=outro_audio_player,
-            background_pin=background_pin
-        )
+        # play_effect(
+        #     actions=actions,
+        #     effects_audio_player=audio,
+        #     intro_audio_player=intro_audio_player,
+        #     outro_audio_player=outro_audio_player,
+        #     background_pin=background_pin
+        # )
+        print('Action')
+        time.sleep(5)
         led_pin.turn_on()
 
     button = RpiInput(BUTTON_PIN_1, action=action)
 
     try:
         led_pin.turn_on()
+        print('Ready.')
         while True:
             time.sleep(0.1)
             button.check_pressed()
