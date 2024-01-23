@@ -61,17 +61,17 @@ def test_pin(pin_id):
     print(f"Testing GPIO pin {pin_id}.")
     pin = RpiPin(pin_id)
     pin.turn_on()
-    time.sleep(2.5)
+    time.sleep(1)
     pin.turn_off()
 
 
 if __name__ == "__main__":
-    # for _ in range(100):
-    #     test_pin(EFFECT_1_PIN)
-    #     time.sleep(0.1)
+    for _ in range(100):
+        test_pin(PANEL_LED_PIN)
+        time.sleep(1)
 
-    pin = RpiPin(PANEL_LED_PIN)
-    pin.turn_on()
+    # pin = RpiPin(PANEL_LED_PIN)
+    # pin.turn_on()
 
 
     # test_pin(PANEL_LED_PIN)
