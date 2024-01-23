@@ -25,7 +25,8 @@ class RpiInput:
         while GPIO.input(self.pin_id) == self.pressed_state:
             time.sleep(0.01)
             if time.time() - start_time > self.press_time:
-                self.action()
+                if self.action is not None:
+                    self.action()
 
 class RpiPin:
     def __init__(self, pin_id, reverse=True):
