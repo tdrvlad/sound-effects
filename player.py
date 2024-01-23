@@ -130,7 +130,9 @@ def main(effect_id, intro_audio_path=None, outro_audio_path=None):
 
 def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_audio_player=None, background_pin=None, background_while_intro=False, background_while_outro=True):
 
+    print("Playing effect.")
     if intro_audio_player:
+        print("Playing intro.")
         if not background_while_intro:
             intro_audio_player.play()
             background_pin.turn_off()
@@ -148,6 +150,7 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
     led_thread.join()
 
     if outro_audio_player:
+        print("Playing outro.")
         if background_while_outro:
             background_pin.turn_on()
             outro_audio_player.play()
@@ -179,5 +182,5 @@ if __name__ == '__main__':
     # test_sample('maxim_machine_gun')
     # test_sample('explosion')
     # main("battle_short")
-    main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
+    main("battle_long", intro_audio_path='./audio_samples/doorbell.mp3', outro_audio_path='./audio_samples/doorbell.mp3')
     # main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
