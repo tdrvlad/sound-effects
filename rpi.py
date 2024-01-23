@@ -80,7 +80,7 @@ if __name__ == "__main__":
     #     test_pin(EFFECT_4_PIN)
     #     time.sleep(1)
 
-    test_button(BUTTON_PIN_1)
+    test_button(BUTTON_PIN_2)
     # pin = RpiPin(PANEL_LED_PIN)
     # pin.turn_on()
 
