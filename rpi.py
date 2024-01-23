@@ -58,15 +58,15 @@ class RpiPin:
             GPIO.output(self.pin_id, self.on)
 
 
-def test_output(pin_id):
+def test_output(pin_id, pause=2):
     print(f"Testing output on GPIO pin {pin_id}.")
 
     pin = RpiPin(pin_id)
     for _ in range(100):
         pin.turn_on()
-        time.sleep(1)
+        time.sleep(pause)
         pin.turn_off()
-        time.sleep(1)
+        time.sleep(pause)
 
 
 def test_button(pin_id):
