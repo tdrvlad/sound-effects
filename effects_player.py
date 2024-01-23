@@ -146,21 +146,22 @@ def main(effect_id, audio_paths):
         )
         led_pin.turn_on()
 
-    buttons = {
+    buttons_actions = {
         BUTTON_PIN_1: lambda: action(BUTTON_PIN_1),
         BUTTON_PIN_2: lambda: action(BUTTON_PIN_2),
         BUTTON_PIN_3: lambda: action(BUTTON_PIN_3)
     }
 
-    for pin, button_action in buttons.items():
-        RpiInput(pin, action=button_action)
+    buttons = []
+    for pin, button_action in buttons_actions.items():
+        buttons .append(RpiInput(pin, action=button_action))
 
     try:
         led_pin.turn_on()
         print('Ready.')
         while True:
             time.sleep(0.1)
-            for button in buttons.values():
+            for button in buttons :
                 button.check_pressed()
 
     except Exception as e:
