@@ -30,10 +30,10 @@ class RpiInput:
 
 class RpiPin:
     state = None
-    on = GPIO.LOW
-    off = GPIO.HIGH
+    on = GPIO.HIGH
+    off = GPIO.LOW
 
-    def __init__(self, pin_id, reverse=False):
+    def __init__(self, pin_id, reverse=True):
         self.pin_id = pin_id
 
         if reverse:
