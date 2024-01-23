@@ -27,5 +27,6 @@ TIMESTAMPS_END = 'stop'
 EFFECTS_MAP = {
     "maxim_machine_gun": EFFECT_2_PIN,
     "explosion": EFFECT_1_PIN,
+    "falling_bomb": EFFECT_3_PIN,
     "background": EFFECT_1_PIN
 }
