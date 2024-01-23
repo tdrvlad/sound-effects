@@ -10,7 +10,7 @@ import RPi.GPIO as GPIO
 
 
 class AudioPlayer:
-    def __init__(self, audio, delay=-0.6, volume_change=20):
+    def __init__(self, audio, delay=0, volume_change=0):
         self.audio = audio
 
         if volume_change:
@@ -146,7 +146,7 @@ def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, backgro
             background_pin.turn_on()
 
         outro_audio = AudioSegment.from_mp3(outro_audio_path)
-        outro_audio_player = AudioPlayer(outro_audio, volume_change=10)
+        outro_audio_player = AudioPlayer(outro_audio)
         outro_audio_player.play()
 
 
@@ -173,4 +173,4 @@ if __name__ == '__main__':
     # test_sample('explosion')
     # main("battle_short")
     # main("battle_long_outro", intro_audio_path='./audio_samples/intro_mateias_doina_discurs.mp3')
-    main("battle_long", intro_audio_path="./audio_samples/doina.mp3", outro_audio_path='./audio_samples/outro_battle.mp3')
+    main("battle_long", outro_audio_path='./audio_samples/outro_battle.mp3')
