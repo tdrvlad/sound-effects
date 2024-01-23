@@ -13,10 +13,10 @@ class RpiInput:
         self.press_time = press_time
         if pull_down:
             pull = GPIO.PUD_DOWN
-            self.pressed_state = GPIO.LOW
+            self.pressed_state = GPIO.HIGH
         else:
             pull = GPIO.PUD_UP
-            self.pressed_state = GPIO.HIGH
+            self.pressed_state = GPIO.LOW
 
         GPIO.setup(self.pin_id, GPIO.IN, pull_up_down=pull)
 
@@ -82,9 +82,9 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    test_output(EFFECT_2_PIN)
+    # test_output(EFFECT_2_PIN)
 
-    # test_button(BUTTON_PIN_1)
+    test_button(BUTTON_PIN_1)
     # pin = RpiPin(PANEL_LED_PIN)
     # pin.turn_on()
 
