@@ -6,7 +6,7 @@ GPIO.setmode(GPIO.BCM)
 
 
 class RpiInput:
-    def __init__(self, pin_id, pull_down=BUTTON_PULL_DOWN, action=None, press_time=0.7):
+    def __init__(self, pin_id, pull_down=BUTTON_PULL_DOWN, action=None, press_time=0.5):
         self.pin_id = pin_id
         self.action = action
         self.pull_down = pull_down
@@ -83,9 +83,9 @@ def test_button(pin_id):
 
 
 if __name__ == "__main__":
-    # test_output(EFFECT_2_PIN)
+    test_output(PANEL_LED_PIN )
 
-    test_button(BUTTON_PIN_3)
+    # test_button(BUTTON_PIN_3)
     # pin = RpiPin(PANEL_LED_PIN)
     # pin.turn_on()
 

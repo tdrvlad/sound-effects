@@ -110,6 +110,7 @@ def main(sample_id, intro_audio_path=None, outro_audio_path=None):
 
 def play_effect(effect_id, intro_audio_path=None, outro_audio_path=None, background_pin=None):
 
+    print("Starting effect.")
     audio, timestamps = load_effect(effect_id)
     sounds = list(timestamps.keys())
     print(f'Loaded timestamps for sounds: {", ".join(sounds)}')
