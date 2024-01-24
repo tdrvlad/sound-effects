@@ -5,8 +5,8 @@ import os
 from params import AUDIO_SAMPLES_DIR, AUDIO_SAMPLES_TIMESTAMPS_DIR, EFFECTS_DIR, AUDIO_FILE, TIMESTAMPS_FILE, \
     TIMESTAMPS_START, TIMESTAMPS_END, EFFECTS_MAP
 from pydub import AudioSegment
-from sound_effects.audio_player import AudioPlayer
-from sound_effects.rpi import RpiPin
+from audio_player import AudioPlayer
+from rpi import RpiPin
 
 
 def load_yaml(file_path):
