@@ -24,6 +24,6 @@ Install the `startup` command to run at the system boot;
 Use `crontab -e` to edit the cron tasks.
 Add this at the end:
 ```
-@reboot /bin/bash /home/pi/sound-effects/startup.sh  > /home/pi/sound-effects/startup.log 2>&1
+@reboot /bin/bash /home/pi/sound-effects/startup.sh  > /home/pi/sound-effects/log.txt 2>&1
 ```
 
