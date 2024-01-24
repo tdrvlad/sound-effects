@@ -7,7 +7,7 @@ samples:
   - name: "maxim_machine_gun"
     frequency_range:
       min: 1.5
-      max: 4.5
+      max: 3.5
   - name: "falling_bomb"
     frequency_range:
       min: 3

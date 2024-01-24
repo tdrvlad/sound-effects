@@ -1,7 +1,7 @@
 import time
 from params import EFFECTS_MAP, PANEL_LED_PIN, BUTTON_PIN_1, BUTTON_PIN_2, BUTTON_PIN_3, BUTTONS_MAP
-from utils import load_effect, get_audio_player, create_sounds_callable_dict, control_leds, \
-    get_effects_pins
+from utils import load_effect, get_audio_player
+from sound_effects.effects_control import create_sounds_callable_dict, control_leds, get_effects_pins
 import threading
 from rpi import RpiPin, RpiInput
 import RPi.GPIO as GPIO
@@ -100,4 +100,4 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
 
 
 if __name__ == '__main__':
-    main(effect_id="battle_v2_20240124122711", buttons_map=BUTTONS_MAP)
+    main(effect_id="battle_v2_20240124124859", buttons_map=BUTTONS_MAP)

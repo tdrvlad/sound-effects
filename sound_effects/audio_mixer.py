@@ -1,12 +1,11 @@
 from params import EFFECTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
-    RECIPE_SAMPLE_FREQUENCY_MIN, RECIPE_SAMPLE_FREQUENCY_MAX, TIMESTAMPS_START, TIMESTAMPS_END
+    RECIPE_SAMPLE_FREQUENCY_MIN, RECIPE_SAMPLE_FREQUENCY_MAX, TIMESTAMPS_START, TIMESTAMPS_END, AUDIO_SAMPLES_DIR
 import os
 from pydub import AudioSegment
 from datetime import datetime
 from collections import defaultdict
 import random
 from typing import Literal
-
 from utils import load_yaml, write_yaml, load_sample, load_audio, load_effect, add_delay_to_timestamps
 
 
@@ -59,7 +58,9 @@ def mix_audio(recipe_name):
     return recipe_id
 
 
-def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "after", "overlay"]="before", result_id=None, gain=0):
+def add_audio_to_effect(audio_id, effect_id, position: Literal["before", "after", "overlay"]="before", result_id=None, gain=0):
+    audio_path = os.path.join(AUDIO_SAMPLES_DIR, f"{audio_id}.mp3")
+
     if result_id is None:
         result_id = f'{os.path.basename(audio_path).split(".")[0]}_{effect_id}'
 
@@ -94,14 +95,8 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 
 if __name__ == '__main__':
     effect_id = mix_audio("battle_v2")
-    add_audio_to_effect("../audio_samples/ww1_battle_background.mp3", effect_id, position="overlay", result_id=effect_id, gain=-1)
-    add_audio_to_effect("../audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-2)
-    add_audio_to_effect("../audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
-    add_audio_to_effect("../audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
-
-    # effect_id = mix_audio('battle_long_outro')
-    # add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-3)
-    # add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id, gain=-1)
-    # add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id, gain=-1)
-    # add_audio_to_effect("./audio_samples/outro_battle.mp3", effect_id, position="after", result_id=effect_id)
+    add_audio_to_effect("ww1_battle_background", effect_id, position="overlay", result_id=effect_id, gain=-1)
+    add_audio_to_effect("ww1_charge_2", effect_id, position="overlay", result_id=effect_id, gain=-2)
+    add_audio_to_effect("ww1_charge_1", effect_id, position="before", result_id=effect_id)
+    add_audio_to_effect("battle_fade_out", effect_id, position="after", result_id=effect_id)
 
