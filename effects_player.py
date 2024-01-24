@@ -173,7 +173,6 @@ def main(effect_id, audio_paths):
         GPIO.cleanup()
 
 
-
 def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_audio_player=None, background_pin=None, background_while_intro=False, background_while_outro=True):
 
     print("Playing effect.")
