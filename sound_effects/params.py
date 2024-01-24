@@ -1,7 +1,7 @@
-AUDIO_SAMPLES_DIR = '../audio_samples'
-AUDIO_SAMPLES_TIMESTAMPS_DIR = '../audio_samples_timestamps'
-RECIPES_DIR = '../recipes'
-EFFECTS_DIR = '../effects'
+AUDIO_SAMPLES_DIR = 'audio_samples'
+AUDIO_SAMPLES_TIMESTAMPS_DIR = 'audio_samples_timestamps'
+RECIPES_DIR = 'recipes'
+EFFECTS_DIR = 'effects'
 
 AUDIO_FILE = 'output'
 TIMESTAMPS_FILE = 'timestamps'
