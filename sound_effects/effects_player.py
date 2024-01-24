@@ -100,4 +100,4 @@ def play_effect(actions, effects_audio_player, intro_audio_player=None, outro_au
 
 
 if __name__ == '__main__':
-    main(effect_id="battle_v2_20240124124859", buttons_map=BUTTONS_MAP)
+    main(effect_id="battle_v2_20240124130205", buttons_map=BUTTONS_MAP)
