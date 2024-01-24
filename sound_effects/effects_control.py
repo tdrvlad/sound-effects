@@ -1,7 +1,7 @@
 import time
 
-from sound_effects.params import EFFECTS_MAP, TIMESTAMPS_START, TIMESTAMPS_END
-from sound_effects.rpi import RpiPin
+from params import EFFECTS_MAP, TIMESTAMPS_START, TIMESTAMPS_END
+from rpi import RpiPin
 
 
 def create_sounds_callable_dict(sounds_timestamps_dict, pins):
