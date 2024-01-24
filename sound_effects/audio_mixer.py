@@ -1,4 +1,4 @@
-from paths import EFFECTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
+from params import EFFECTS_DIR, RECIPES_DIR, RECIPE_LENGTH, RECIPE_SAMPLES, RECIPE_SAMPLE_NAME, RECIPE_SAMPLE_FREQUENCY, \
     RECIPE_SAMPLE_FREQUENCY_MIN, RECIPE_SAMPLE_FREQUENCY_MAX, TIMESTAMPS_START, TIMESTAMPS_END
 import os
 from pydub import AudioSegment
@@ -94,10 +94,10 @@ def add_audio_to_effect(audio_path, effect_id, position: Literal["before", "afte
 
 if __name__ == '__main__':
     effect_id = mix_audio("battle_v2")
-    add_audio_to_effect("./audio_samples/ww1_battle_background.mp3", effect_id, position="overlay", result_id=effect_id, gain=-2)
-    add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-2)
-    add_audio_to_effect("./audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
-    add_audio_to_effect("./audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
+    add_audio_to_effect("../audio_samples/ww1_battle_background.mp3", effect_id, position="overlay", result_id=effect_id, gain=-1)
+    add_audio_to_effect("../audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-2)
+    add_audio_to_effect("../audio_samples/ww1_charge_1.mp3", effect_id, position="before", result_id=effect_id)
+    add_audio_to_effect("../audio_samples/battle_fade_out.mp3", effect_id, position="after", result_id=effect_id)
 
     # effect_id = mix_audio('battle_long_outro')
     # add_audio_to_effect("./audio_samples/ww1_charge_2.mp3", effect_id, position="overlay", result_id=effect_id, gain=-3)

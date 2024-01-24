@@ -32,3 +32,9 @@ EFFECTS_MAP = {
     "mannlicher_rifle": EFFECT_4_PIN,
     "background": EFFECT_1_PIN
 }
+
+BUTTONS_MAP = {
+    BUTTON_PIN_1: ("./audio_samples/intro_ro.mp3", "./audio_samples/outro_battle.mp3"),
+    BUTTON_PIN_2: ("./audio_samples/intro_en.mp3", "./audio_samples/outro_battle.mp3"),
+    BUTTON_PIN_3: ("./audio_samples/intro_doina.mp3", "./audio_samples/outro_battle.mp3"),
+}
